@@ -15,8 +15,23 @@ use Laminas\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+
+    private $dateService;
+
+    public function __construct($dateService){
+        $this->dateService = $dateService;
+    }
+
     public function indexAction()
     {
         return new ViewModel();
+    }
+
+    public function testAction()
+    {
+        $message = $this->dateService->test();
+        return new ViewModel([
+            'message' => $message,
+        ]);
     }
 }
