@@ -5,12 +5,12 @@ namespace Application\Service;
 class DateService
 {
 
-    public function __construct() {
-
+    public function __construct()
+    {
     }
 
-    public function test() {
+    public function test(): string
+    {
         return 'This is test message.';
     }
-
 }
