@@ -6,14 +6,14 @@
  * @license   https://github.com/laminas/laminas-mvc-skeleton/blob/master/LICENSE.md New BSD License
  */
 
-/**
- * List of enabled modules for this application.
- *
- * This should be an array of module namespaces used in the application.
- */
-return [
-    'Laminas\Router',
-    'Laminas\Validator',
-    'Application',
-    'Domain',
-];
+declare(strict_types=1);
+
+namespace Domain;
+
+class Module
+{
+    public function getConfig(): array
+    {
+        return include __DIR__ . '/../config/module.config.php';
+    }
+}
