@@ -30,9 +30,9 @@ class IndexController extends AbstractActionController
 
     public function testAction()
     {
-        $message = $this->dateService->test();
         return new ViewModel([
-            'message' => $message,
+            'message' => 'This is test message.',
+            'date' => $this->dateService->generateStringDatas(),
         ]);
     }
 }

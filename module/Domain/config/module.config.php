@@ -13,6 +13,7 @@ namespace Domain;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
+
 return [
     'service_manager' => [
         'factories' => [
