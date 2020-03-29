@@ -46,6 +46,7 @@ class UnixtimeForm extends Form {
                     'name' => Filter\StringTrim::class
                 ],
             ],
+            'required' => false,
             'validators' => [
                 [
                     'name'    => Validator\StringLength::class,

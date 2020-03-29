@@ -60,6 +60,7 @@ class DateService
     {
         switch (true) {
             case is_null($source):
+            case $source === "":
                 return new DateTimeImmutable();
             case $this->isUnixtime($source):
                 return new DateTimeImmutable(date(DateTimeInterface::ISO8601, $source));
