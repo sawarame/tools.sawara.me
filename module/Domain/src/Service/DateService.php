@@ -26,7 +26,7 @@ class DateService
      * @param string $source source string.
      * @return array
      */
-    public function generateStringDatas(string $source = null): array
+    public function generateDateStrings(string $source = null): array
     {
         $dateTime = $this->generateDateTime($source);
         return [
@@ -64,7 +64,7 @@ class DateService
             case $this->isUnixtime($source):
                 return new DateTimeImmutable(date(DateTimeInterface::ISO8601, $source));
             case $this->isMillisecond($source):
-                return new DateTimeImmutable(date('Y-m-d H:i:s', asubstr($source, 0, 10))
+                return new DateTimeImmutable(date('Y-m-d H:i:s', substr($source, 0, 10))
                     . '.' . substr($source, 10, 3));
             case $this->isMicrosecond($source):
                 list($dec, $int) = preg_split('/\s/', $source);

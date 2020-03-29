@@ -5,6 +5,17 @@
  */
 ?>
 <div class="jumbotron">
-    <h1 class="display-4"><?= $this->escapeHtml($message) ?></h1>
+    <h1 class="display-4"><?= $this->translate('This is test page.', 'test') ?></h1>
 </div>
-<?php dump($date) ?>
+<?= $this->form($form) ?>
+<table>
+    <tbody>
+        <?php foreach ($date as $key => $value) : ?>
+            <tr>
+                <th><?= $this->escapeHtml($key) ?></th>
+                <td><?= $this->escapeHtml($value) ?></td>
+            </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<?php // dump($date) ?>

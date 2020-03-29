@@ -12,6 +12,7 @@ namespace Application\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Application\Form\UnixtimeForm;
 
 class IndexController extends AbstractActionController
 {
@@ -30,9 +31,12 @@ class IndexController extends AbstractActionController
 
     public function testAction()
     {
+        $form = new UnixtimeForm($this->params()->fromQuery());
+        $form->isValid();
+        
         return new ViewModel([
-            'message' => 'This is test message.',
-            'date' => $this->dateService->generateStringDatas(),
+            'form' => $form,
+            'date' => $this->dateService->generateDateStrings($form->getData()['query']),
         ]);
     }
 }

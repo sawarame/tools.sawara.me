@@ -44,6 +44,24 @@ return [
             Controller\IndexController::class => Controller\Factory\IndexControllerFactory::class,
         ],
     ],
+    'translator' => [
+        'locale' => 'ja_JP',
+        //'locale' => 'en_US',
+        'translation_files' => [
+            [
+                'type' => 'phparray',
+                'filename' => __DIR__.'/../../../vendor/laminas/laminas-i18n-resources/languages/ja/Laminas_Validate.php',
+                'text_domain' => 'default',
+                'locale' => 'ja_JP',
+            ],
+            [
+                'type' => 'phparray',
+                'filename' => __DIR__.'/../languages/test/ja_JP.php',
+                'text_domain' => 'test',
+                'locale' => 'ja_JP',
+            ],
+        ],
+    ],
     'view_manager' => [
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
