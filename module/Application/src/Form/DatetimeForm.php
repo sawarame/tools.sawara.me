@@ -6,7 +6,7 @@ use Laminas\Form\Form;
 use Laminas\Filter;
 use Laminas\Validator;
 
-class UnixtimeForm extends Form {
+class DatetimeForm extends Form {
 
    public function __construct(array $data)
    {
@@ -16,14 +16,14 @@ class UnixtimeForm extends Form {
        $this->setData($data);
    }
 
-   public function setElements() : UnixtimeForm
+   public function setElements() : DatetimeForm
    {
         // for input unixtime.
         $this->add([
             'type' => 'text',
             'name' => 'query',
             'options' => [
-                'label' => 'unixtime',
+                'label' => 'date time',
             ],
         ]);
 
@@ -46,6 +46,7 @@ class UnixtimeForm extends Form {
                     'name' => Filter\StringTrim::class
                 ],
             ],
+            'required' => false,
             'validators' => [
                 [
                     'name'    => Validator\StringLength::class,

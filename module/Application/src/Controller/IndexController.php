@@ -12,7 +12,7 @@ namespace Application\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
-use Application\Form\UnixtimeForm;
+use Application\Form\DatetimeForm;
 
 class IndexController extends AbstractActionController
 {
@@ -29,14 +29,21 @@ class IndexController extends AbstractActionController
         return new ViewModel();
     }
 
-    public function testAction()
+    /**
+     * Date format conversion tool page.
+     *
+     * @return ViewModel
+     */
+    public function dateAction() : ViewModel
     {
-        $form = new UnixtimeForm($this->params()->fromQuery());
-        $form->isValid();
+        $response = [];
+        $form = new DatetimeForm($this->params()->fromQuery());
+        $response['form'] = $form;
+
+        if ($form->isValid()) {
+            $response['date'] = $this->dateService->generateDateStrings($form->getData()['query']);
+        }
         
-        return new ViewModel([
-            'form' => $form,
-            'date' => $this->dateService->generateDateStrings($form->getData()['query']),
-        ]);
+        return new ViewModel($response);
     }
 }
