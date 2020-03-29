@@ -72,8 +72,8 @@ class DateService
                 return new DateTimeImmutable(date('Y-m-d H:i:s', $int)
                     . '.' . substr($dec, 2));
             default:
-                // TODO: willing throw exception.
-                break;
+                // TODO: should catch exception. 
+                return new DateTimeImmutable($source);
         }
     }
 
