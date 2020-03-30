@@ -17,11 +17,11 @@ use Application\Form\DatetimeForm;
 class IndexController extends AbstractActionController
 {
 
-    private $dateService;
+    private $dateTimeService;
 
-    public function __construct($dateService)
+    public function __construct($dateTimeService)
     {
-        $this->dateService = $dateService;
+        $this->dateTimeService = $dateTimeService;
     }
 
     public function indexAction()
@@ -41,7 +41,12 @@ class IndexController extends AbstractActionController
         $response['form'] = $form;
 
         if ($form->isValid()) {
-            $response['date'] = $this->dateService->generateDateStrings($form->getData()['query']);
+            try {
+                $response['date'] = $this->dateTimeService->generateDateStrings($form->getData()['query']);
+            } catch (\Exception $e) {
+                // $response['date'] = $this->dateTimeService->generateDateStrings();
+                $response['message'] = 'failed to date conversion.';
+            }
         }
         
         return new ViewModel($response);

@@ -6,7 +6,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use DateTimeInterface;
 
-class DateService
+class DateTimeService
 {
     const TIME_ZONE = 'Asia/Tokyo';
 
@@ -31,6 +31,12 @@ class DateService
         $dateTime = $this->generateDateTime($source);
         return [
             'origin'     => $source,
+            'Y年m月d日 H:i:s' => $dateTime->format('Y年m月d日 H:i:s'),
+            'Y年m月d日 H:i:s.u' => $dateTime->format('Y年m月d日 H:i:s.u'),
+            'Y-m-d H:i:s' => $dateTime->format('Y-m-d H:i:s'),
+            'Y-m-d H:i:s.u' => $dateTime->format('Y-m-d H:i:s.u'),
+            'Y/m/d H:i:s' => $dateTime->format('Y/m/d H:i:s'),
+            'Y/m/d H:i:s.u' => $dateTime->format('Y/m/d H:i:s.u'),
             'unixtime'   => $dateTime->getTimestamp(),
             'millisecond'  => $dateTime->getTimestamp() . $dateTime->format('v'),
             'microsecond'  => $dateTime->getTimestamp() . $dateTime->format('u'),
