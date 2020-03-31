@@ -30,29 +30,29 @@ class DateTimeService
     {
         $dateTime = $this->generateDateTime($source);
         return [
-            'origin'     => $source,
-            'Y年m月d日 H:i:s' => $dateTime->format('Y年m月d日 H:i:s'),
+            'origin'            => $source,
+            'Y年m月d日 H:i:s'   => $dateTime->format('Y年m月d日 H:i:s'),
             'Y年m月d日 H:i:s.u' => $dateTime->format('Y年m月d日 H:i:s.u'),
-            'Y-m-d H:i:s' => $dateTime->format('Y-m-d H:i:s'),
-            'Y-m-d H:i:s.u' => $dateTime->format('Y-m-d H:i:s.u'),
-            'Y/m/d H:i:s' => $dateTime->format('Y/m/d H:i:s'),
-            'Y/m/d H:i:s.u' => $dateTime->format('Y/m/d H:i:s.u'),
-            'unixtime'   => $dateTime->getTimestamp(),
-            'millisecond'  => $dateTime->getTimestamp() . $dateTime->format('v'),
-            'microsecond'  => $dateTime->getTimestamp() . $dateTime->format('u'),
-            'ATOM' => $dateTime->format(DateTImeInterface::ATOM),
-            'COOKIE' => $dateTime->format(DateTImeInterface::COOKIE),
-            'ISO8601' => $dateTime->format(DateTImeInterface::ISO8601),
-            'RFC822' => $dateTime->format(DateTImeInterface::RFC822),
-            'RFC850' => $dateTime->format(DateTImeInterface::RFC850),
-            'RFC1036' => $dateTime->format(DateTImeInterface::RFC1036),
-            'RFC1123' => $dateTime->format(DateTImeInterface::RFC1123),
-            'RFC7231' => $dateTime->format(DateTImeInterface::RFC7231),
-            'RFC2822' => $dateTime->format(DateTImeInterface::RFC2822),
-            'RFC3339' => $dateTime->format(DateTImeInterface::RFC3339),
-            'RFC3339_EXTENDED' => $dateTime->format(DateTImeInterface::RFC3339_EXTENDED),
-            'RSS' => $dateTime->format(DateTImeInterface::RSS),
-            'W3C' => $dateTime->format(DateTImeInterface::W3C),
+            'Y-m-d H:i:s'       => $dateTime->format('Y-m-d H:i:s'),
+            'Y-m-d H:i:s.u'     => $dateTime->format('Y-m-d H:i:s.u'),
+            'Y/m/d H:i:s'       => $dateTime->format('Y/m/d H:i:s'),
+            'Y/m/d H:i:s.u'     => $dateTime->format('Y/m/d H:i:s.u'),
+            'unixtime'          => $dateTime->getTimestamp(),
+            'millisecond'       => $dateTime->getTimestamp() . $dateTime->format('v'),
+            'microsecond'       => $dateTime->getTimestamp() . $dateTime->format('u'),
+            'ATOM'              => $dateTime->format(DateTImeInterface::ATOM),
+            'COOKIE'            => $dateTime->format(DateTImeInterface::COOKIE),
+            'ISO8601'           => $dateTime->format(DateTImeInterface::ISO8601),
+            'RFC822'            => $dateTime->format(DateTImeInterface::RFC822),
+            'RFC850'            => $dateTime->format(DateTImeInterface::RFC850),
+            'RFC1036'           => $dateTime->format(DateTImeInterface::RFC1036),
+            'RFC1123'           => $dateTime->format(DateTImeInterface::RFC1123),
+            'RFC7231'           => $dateTime->format(DateTImeInterface::RFC7231),
+            'RFC2822'           => $dateTime->format(DateTImeInterface::RFC2822),
+            'RFC3339'           => $dateTime->format(DateTImeInterface::RFC3339),
+            'RFC3339_EXTENDED'  => $dateTime->format(DateTImeInterface::RFC3339_EXTENDED),
+            'RSS'               => $dateTime->format(DateTImeInterface::RSS),
+            'W3C'               => $dateTime->format(DateTImeInterface::W3C),
         ];
     }
 
@@ -78,8 +78,12 @@ class DateTimeService
                 return new DateTimeImmutable(date('Y-m-d H:i:s', $int)
                     . '.' . substr($dec, 2));
             default:
+                $timestamp = strtotime($source);
+                if (!$timestamp) {
+                    throw new \Exception('failed to date conversion.');
+                }
                 // TODO: should catch exception. 
-                return new DateTimeImmutable($source);
+                return new DateTimeImmutable(date(DateTimeInterface::ISO8601, $timestamp));
         }
     }
 

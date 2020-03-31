@@ -40,7 +40,7 @@ class DatetimeForm extends Form {
         $inputFilter = $this->getInputFilter();
 
         $inputFilter->add([
-            'name'     => 'query',
+            'name'     => 'q',
             'filters'  => [
                 [
                     'name' => Filter\StringTrim::class

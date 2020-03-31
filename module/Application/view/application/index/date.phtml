@@ -6,13 +6,15 @@
 ?>
 <div class="jumbotron">
     <h1 class="display-4"><?= $this->translate('Date format conversion tool', 'date') ?></h1>
+    <hr/>
+    <?= $this->form($form) ?>
 </div>
 <?php if (isset($message)) : ?>
     <p><?= $this->translate($message, 'date') ?></p>
 <?php endif ?>
-<?= $this->form($form) ?>
+
 <?php if (isset($date)) : ?>
-    <table>
+    <table class="table">
         <tbody>
             <?php foreach ($date as $key => $value) : ?>
                 <tr>
