@@ -19,7 +19,9 @@
         "laminas/laminas-math": "^3.2",
         "laminas/laminas-session": "^2.9",
         "laminas/laminas-i18n-resources": "^2.6",
-        "laminas/laminas-mvc-i18n": "^1.1"
+        "laminas/laminas-mvc-i18n": "^1.1",
+        "components/jquery": "^3.4",
+        "components/bootstrap": "^4.4"
     },
     "require-dev": {
         "laminas/laminas-test": "^3.4",
@@ -40,6 +42,12 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "php bin/assets"
+        ],
+        "post-update-cmd": [
+            "php bin/assets"
+        ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "development-disable": "laminas-development-mode disable",

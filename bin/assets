@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+chdir(realpath(__DIR__ . '/../'));
+
+$copyFiles = [
+    // jquery
+    'vendor/components/jquery/jquery.min.js' => 'public/js/jquery.min.js',
+    // bootstrap
+    'vendor/components/bootstrap/js/bootstrap.min.js' => 'public/js/bootstrap.min.js',
+    'vendor/components/bootstrap/css/bootstrap.min.css' => 'public/css/bootstrap.min.css'
+];
+
+foreach ($copyFiles as $from => $to) {
+    copy($from, $to);
+}
