@@ -52,6 +52,7 @@
             </footer>
         </div>
         <?= $this->inlineScript()
+            ->prependFile($this->basePath('js/app.js'))
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/jquery.min.js')) ?>
     </body>
