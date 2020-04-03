@@ -21,19 +21,9 @@ class DatetimeForm extends Form {
         // for input unixtime.
         $this->add([
             'type' => 'text',
-            'name' => 'query',
+            'name' => 'q',
             'options' => [
                 'label' => 'date time',
-            ],
-        ]);
-
-        // submit button.
-        $this->add([
-            'type' => 'submit',
-            'name' => 'submit',
-            'attributes' => [
-                'value' => 'submit',
-                'id' => 'submit',
             ],
         ]);
 

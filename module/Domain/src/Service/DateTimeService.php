@@ -30,7 +30,7 @@ class DateTimeService
     {
         $dateTime = $this->generateDateTime($source);
         return [
-            'origin'            => $source,
+            'Original string'   => $source,
             'Y年m月d日 H:i:s'   => $dateTime->format('Y年m月d日 H:i:s'),
             'Y年m月d日 H:i:s.u' => $dateTime->format('Y年m月d日 H:i:s.u'),
             'Y-m-d H:i:s'       => $dateTime->format('Y-m-d H:i:s'),
@@ -88,7 +88,7 @@ class DateTimeService
     }
 
     /**
-     * Check that source is unixtime or not.
+     * Test whether a source is unixtime.
      *
      * @param string $source
      * @return boolean
@@ -102,7 +102,7 @@ class DateTimeService
     }
 
     /**
-     * Check that source is millisecond or not.
+     * Test whether a source is millisecond.
      *
      * @param mixed $source
      * @return bool
@@ -116,7 +116,7 @@ class DateTimeService
     }
 
     /**
-     * Check that source is microsecond or not.
+     * Test whether a source is microsecond.
      *
      * @param string $source
      * @return boolean

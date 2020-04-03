@@ -94,4 +94,16 @@ return [
             __DIR__ . '/../view',
         ],
     ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\Bs4FormElement::class => InvokableFactory::class,
+            View\Helper\Bs4FormElementErrors::class => InvokableFactory::class,
+        ],
+        'aliases' => [
+            'bs4FormElement' => View\Helper\Bs4FormElement::class,
+            'Bs4FormElement' => View\Helper\Bs4FormElement::class,
+            'bs4FormElementErrors' => View\Helper\Bs4FormElementErrors::class,
+            'Bs4FormElementErrors' => View\Helper\Bs4FormElementErrors::class,
+        ],
+    ],
 ];

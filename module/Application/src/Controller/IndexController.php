@@ -16,11 +16,14 @@ use Application\Form\DatetimeForm;
 
 class IndexController extends AbstractActionController
 {
-
+    private $translator;
     private $dateTimeService;
 
-    public function __construct($dateTimeService)
-    {
+    public function __construct(
+        $translator, 
+        $dateTimeService
+    ) {
+        $this->translator = $translator;
         $this->dateTimeService = $dateTimeService;
     }
 
@@ -42,10 +45,10 @@ class IndexController extends AbstractActionController
 
         if ($form->isValid()) {
             try {
-                $response['date'] = $this->dateTimeService->generateDateStrings($form->getData()['query']);
+                $response['date'] = $this->dateTimeService->generateDateStrings($form->getData()['q']);
             } catch (\Exception $e) {
                 // $response['date'] = $this->dateTimeService->generateDateStrings();
-                $response['message'] = 'failed to date conversion.';
+                $form->get('q')->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
             }
         }
         
