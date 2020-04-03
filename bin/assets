@@ -10,7 +10,9 @@ $copyFiles = [
     'vendor/components/jquery/jquery.slim.min.js' => 'public/js/jquery.slim.min.js',
     // bootstrap
     'vendor/components/bootstrap/js/bootstrap.min.js' => 'public/js/bootstrap.min.js',
-    'vendor/components/bootstrap/css/bootstrap.min.css' => 'public/css/bootstrap.min.css'
+    'vendor/components/bootstrap/js/bootstrap.min.js.map' => 'public/js/bootstrap.min.js.map',
+    'vendor/components/bootstrap/css/bootstrap.min.css' => 'public/css/bootstrap.min.css',
+    'vendor/components/bootstrap/css/bootstrap.min.css.map' => 'public/css/bootstrap.min.css.map',
 ];
 
 foreach ($copyFiles as $from => $to) {

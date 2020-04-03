@@ -22,9 +22,6 @@ class DatetimeForm extends Form {
         $this->add([
             'type' => 'text',
             'name' => 'q',
-            'options' => [
-                'label' => 'date time',
-            ],
         ]);
 
         $inputFilter = $this->getInputFilter();

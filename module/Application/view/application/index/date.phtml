@@ -4,16 +4,20 @@
  * @var Laminas\View\Renderer\PhpRenderer $this
  */
 ?>
-<div class="jumbotron">
-    <h1 class="display-4"><?= $this->translate('Date format conversion tool', 'date') ?></h1>
-    <hr/>
-</div>
-
+<h1><?= $this->translate('Date format conversion tool', 'date') ?></h1>
+<hr/>
+<p>
+    <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
+    <?= $this->translate('You can get the datetime converted to various format.', 'date') ?>
+</p>
 <form class="form-inline">
     <div class="form-group">
-        <?= $this->formLabel($form->get('q')->setLabelAttributes(['class' => 'ml-2 mb-2'])) ?>
-        <?= $this->bs4FormElement($form->get('q')->setAttribute('class', 'form-control ml-2 mb-2')) ?>
-        <button type="submit" class="btn btn-primary ml-2 mb-2">Submit</button>
+        <?= $this->formLabel($form->get('q')
+            ->setLabel($this->translate('Datetime', 'date'))
+            ->setLabelAttributes(['class' => 'ml-2 mb-2'])) ?>
+        <?= $this->bs4FormElement($form->get('q')
+            ->setAttribute('class', 'form-control ml-2 mb-2')) ?>
+        <button type="submit" class="btn btn-primary ml-2 mb-2"><?= $this->translate('Submit', 'date') ?></button>
         <?= $this->bs4FormElementErrors($form->get('q')) ?>
     </div>
 </form>
