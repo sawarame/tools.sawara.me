@@ -47,7 +47,6 @@ class IndexController extends AbstractActionController
             try {
                 $response['date'] = $this->dateTimeService->generateDateStrings($form->getData()['q']);
             } catch (\Exception $e) {
-                // $response['date'] = $this->dateTimeService->generateDateStrings();
                 $form->get('q')->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
             }
         }
