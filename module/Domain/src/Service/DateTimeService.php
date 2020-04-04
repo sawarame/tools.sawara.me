@@ -3,7 +3,6 @@
 namespace Domain\Service;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use DateTimeInterface;
 
 class DateTimeService
@@ -76,7 +75,7 @@ class DateTimeService
             case $this->isMicrosecond($source):
                 list($dec, $int) = preg_split('/\s/', $source);
                 return new DateTimeImmutable(date('Y-m-d H:i:s', $int)
-                    . '.' . substr($dec, 2));
+                    . '.' . substr($dec, 2, 6));
             default:
                 $timestamp = strtotime($source);
                 if (!$timestamp) {
