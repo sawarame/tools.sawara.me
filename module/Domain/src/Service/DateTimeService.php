@@ -72,10 +72,13 @@ class DateTimeService
             case $this->isMillisecond($source):
                 return new DateTimeImmutable(date('Y-m-d H:i:s', substr($source, 0, 10))
                     . '.' . substr($source, 10, 3));
-            case $this->isMicrosecond($source):
+            case $this->isMicrotime($source):
                 list($dec, $int) = preg_split('/\s/', $source);
                 return new DateTimeImmutable(date('Y-m-d H:i:s', $int)
                     . '.' . substr($dec, 2, 6));
+            case $this->isMicrosecond($source):
+                return new DateTimeImmutable(date('Y-m-d H:i:s', substr($source, 0, 10))
+                    . '.' . substr($source, 10, 6));
             default:
                 $timestamp = strtotime($source);
                 if (!$timestamp) {
@@ -115,6 +118,20 @@ class DateTimeService
     }
 
     /**
+     * Test whether a source is microtime.
+     *
+     * @param string $source
+     * @return boolean
+     */
+    public function isMicrotime(string $source): bool
+    {
+        if (preg_match('/^0\.\d{6,8}\s\d{10}$/', $source)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Test whether a source is microsecond.
      *
      * @param string $source
@@ -122,7 +139,7 @@ class DateTimeService
      */
     public function isMicrosecond(string $source): bool
     {
-        if (preg_match('/^0\.\d{6,8}\s\d{10}$/', $source)) {
+        if (preg_match('/^\d{16}$/', $source)) {
             return true;
         }
         return false;

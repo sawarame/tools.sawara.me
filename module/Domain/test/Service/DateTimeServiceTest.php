@@ -62,6 +62,7 @@ class DateTimeServiceTest extends TestCase
         $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime('1585965086'));
         $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime('1585965086123'));
         $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime(microtime()));
+        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime('1585965086123456'));
         $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime(' 2020-04-04T10:51:26'));
     }
 
@@ -84,9 +85,17 @@ class DateTimeServiceTest extends TestCase
         $this->assertFalse($this->service->isMillisecond('aaa'));
     }
 
+    public function testIsMicrotime()
+    {
+        $this->assertTrue($this->service->isMicrotime('0.14636600 1585965086'));
+        $this->assertFalse($this->service->isMicrotime('1585965086'));
+        $this->assertFalse($this->service->isMicrotime('aaa'));
+    }
+
     public function testIsMicrosecond()
     {
-        $this->assertTrue($this->service->isMicrosecond('0.14636600 1585965086'));
+        $this->assertTrue($this->service->isMicrosecond('1585965086123456'));
+        $this->assertFalse($this->service->isMicrosecond('0.14636600 1585965086'));
         $this->assertFalse($this->service->isMicrosecond('1585965086'));
         $this->assertFalse($this->service->isMicrosecond('aaa'));
     }
