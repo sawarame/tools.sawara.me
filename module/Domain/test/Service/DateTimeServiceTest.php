@@ -15,7 +15,7 @@ class DateTimeServiceTest extends TestCase
 
     public function setUp(): void
     {
-        $this->service =  new DateTimeService();
+        $this->service = new DateTimeService();
     }
 
     public function testGenerateDateStrings()
@@ -29,6 +29,7 @@ class DateTimeServiceTest extends TestCase
             'Y-m-d H:i:s.u'     => '2020-04-04 10:51:26.000000',
             'Y/m/d H:i:s'       => '2020/04/04 10:51:26',
             'Y/m/d H:i:s.u'     => '2020/04/04 10:51:26.000000',
+            'YmdHis'            => '20200404105126',
             'unixtime'          => 1585965086,
             'millisecond'       => '1585965086000',
             'microsecond'       => '1585965086000000',
@@ -46,7 +47,7 @@ class DateTimeServiceTest extends TestCase
             'RSS'               => 'Sat, 04 Apr 2020 10:51:26 +0900',
             'W3C'               => '2020-04-04T10:51:26+09:00',
         ];
-        
+
         $this->assertSame($expect, $this->service->generateDateStrings($source));
     }
 
@@ -58,12 +59,12 @@ class DateTimeServiceTest extends TestCase
 
     public function testGenerateDateTime()
     {
-        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime());
-        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime('1585965086'));
-        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime('1585965086123'));
-        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime(microtime()));
-        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime('1585965086123456'));
-        $this->assertInstanceOf(DateTimeImmutable::class,  $this->service->generateDateTime(' 2020-04-04T10:51:26'));
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->service->generateDateTime());
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->service->generateDateTime('1585965086'));
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->service->generateDateTime('1585965086123'));
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->service->generateDateTime(microtime()));
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->service->generateDateTime('1585965086123456'));
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->service->generateDateTime(' 2020-04-04T10:51:26'));
     }
 
     public function testGenerateDateTimeError()

@@ -6,18 +6,19 @@ use Laminas\Form\Form;
 use Laminas\Filter;
 use Laminas\Validator;
 
-class DatetimeForm extends Form {
+class DatetimeForm extends Form
+{
 
-   public function __construct(array $data)
-   {
-       parent::__construct('unixtime-form');
-       $this->setAttribute('method', 'get');
-       $this->setElements();
-       $this->setData($data);
-   }
+    public function __construct(array $data)
+    {
+        parent::__construct('unixtime-form');
+        $this->setAttribute('method', 'get');
+        $this->setElements();
+        $this->setData($data);
+    }
 
-   public function setElements() : DatetimeForm
-   {
+    public function setElements(): DatetimeForm
+    {
         // for input unixtime.
         $this->add([
             'type' => 'text',
@@ -45,5 +46,5 @@ class DatetimeForm extends Form {
         ]);
 
         return $this;
-   }
+    }
 }

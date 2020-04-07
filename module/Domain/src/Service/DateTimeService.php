@@ -7,7 +7,7 @@ use DateTimeInterface;
 
 class DateTimeService
 {
-    const TIME_ZONE = 'Asia/Tokyo';
+    private const TIME_ZONE = 'Asia/Tokyo';
 
     /**
      * Constructor.
@@ -36,6 +36,7 @@ class DateTimeService
             'Y-m-d H:i:s.u'     => $dateTime->format('Y-m-d H:i:s.u'),
             'Y/m/d H:i:s'       => $dateTime->format('Y/m/d H:i:s'),
             'Y/m/d H:i:s.u'     => $dateTime->format('Y/m/d H:i:s.u'),
+            'YmdHis'            => $dateTime->format('YmdHis'),
             'unixtime'          => $dateTime->getTimestamp(),
             'millisecond'       => $dateTime->getTimestamp() . $dateTime->format('v'),
             'microsecond'       => $dateTime->getTimestamp() . $dateTime->format('u'),
@@ -81,10 +82,10 @@ class DateTimeService
                     . '.' . substr($source, 10, 6));
             default:
                 $timestamp = strtotime($source);
-                if (!$timestamp) {
+                if (! $timestamp) {
                     throw new \Exception('failed to date conversion.');
                 }
-                // TODO: should catch exception. 
+                // TODO: should catch exception.
                 return new DateTimeImmutable(date(DateTimeInterface::ISO8601, $timestamp));
         }
     }

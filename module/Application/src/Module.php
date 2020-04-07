@@ -15,7 +15,6 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\AbstractValidator;
 
-
 class Module
 {
     public function getConfig(): array
@@ -24,7 +23,7 @@ class Module
     }
 
     /**
-     * 
+     *
      *
      * @param MvcEvent $event
      * @return void
@@ -40,7 +39,7 @@ class Module
             100
         );
     }
- 
+
     /**
      *
      *

@@ -20,14 +20,14 @@ class IndexController extends AbstractActionController
     private $dateTimeService;
 
     public function __construct(
-        $translator, 
+        $translator,
         $dateTimeService
     ) {
         $this->translator = $translator;
         $this->dateTimeService = $dateTimeService;
     }
 
-    public function indexAction()
+    public function indexAction(): ViewModel
     {
         return new ViewModel();
     }
@@ -37,7 +37,7 @@ class IndexController extends AbstractActionController
      *
      * @return ViewModel
      */
-    public function dateAction() : ViewModel
+    public function dateAction(): ViewModel
     {
         $response = [];
         $form = new DatetimeForm($this->params()->fromQuery());
@@ -50,7 +50,7 @@ class IndexController extends AbstractActionController
                 $form->get('q')->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
             }
         }
-        
+
         return new ViewModel($response);
     }
 }
