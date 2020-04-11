@@ -16,6 +16,50 @@ class StringService
     }
 
     /**
+     * Genarate some passwords
+     *
+     * @return void
+     */
+    public function generatePasswords(
+        int $number,
+        int $length,
+        array $exclude = [],
+        bool $isAllowedSameChar = false
+    ) {
+        $graph = [];
+        $alnum = [];
+        $alpha = [];
+        for ($i = 0; $i < $number; $i++) {
+            $graph[] = $this->generateGraphPassword($length, $exclude, $isAllowedSameChar);
+            $alnum[] = $this->generateAlnumPassword($length, $exclude, $isAllowedSameChar);
+            $alpha[] = $this->generateAlphaPassword($length, $exclude, $isAllowedSameChar);
+        }
+
+        return [
+            'graph' => $graph,
+            'alnum' => $alnum,
+            'alpha' => $alpha,
+        ];
+    }
+
+    /**
+     * Filter characters.
+     *
+     * @param array $chars
+     * @param array $exclude
+     * @return void
+     */
+    public function filterUseCharacters(array $chars, array $exclude) {
+        $useChars = array_filter($chars, function ($var) use ($exclude) {
+            return ! ArrayUtils::inArray($var, $exclude);
+        });
+        if ($useChars) {
+            return $useChars;
+        }
+        return $chars;
+    }
+
+    /**
      * Generate password by ascii printing characters excluede spece.
      *
      * @param integer $length
@@ -24,9 +68,7 @@ class StringService
      */
     public function generateGraphPassword(int $length, array $exclude = [], bool $isAllowedSameChar = false): string
     {
-        $useChars = array_filter(range('!', '~'), function ($var) use ($exclude) {
-            return ! ArrayUtils::inArray($var, $exclude);
-        });
+        $useChars = $this->filterUseCharacters(range('!', '~'), $exclude);
         return $this->generatePassword($useChars, $length, $isAllowedSameChar);
     }
 
@@ -41,9 +83,7 @@ class StringService
     {
         $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
         $digits = range('0', '9');
-        $useChars = array_filter(ArrayUtils::merge($letters, $digits), function ($var) use ($exclude) {
-            return ! ArrayUtils::inArray($var, $exclude);
-        });
+        $useChars = $this->filterUseCharacters(ArrayUtils::merge($letters, $digits), $exclude);
         return $this->generatePassword($useChars, $length, $isAllowedSameChar);
     }
 
@@ -57,9 +97,7 @@ class StringService
     public function generateAlphaPassword(int $length, array $exclude = [], bool $isAllowedSameChar = false): string
     {
         $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
-        $useChars = array_filter($letters, function ($var) use ($exclude) {
-            return ! ArrayUtils::inArray($var, $exclude);
-        });
+        $useChars = $this->filterUseCharacters($letters, $exclude);
         return $this->generatePassword($useChars, $length, $isAllowedSameChar);
     }
 
@@ -77,4 +115,52 @@ class StringService
         }
         return substr(str_shuffle(str_repeat(implode('', $useChars), ($isAllowedSameChar ? $length : 1))), 0, $length);
     }
+
+    /**
+     * Ailias convertFromCamelCaseToSnakeCase
+     *
+     * @param string $source
+     * @return string
+     */
+    public function cc2sc(string $source): string
+    {
+        return $this->convertFromCamelCaseToSnakeCase($source);
+    }
+
+    /**
+     * Ailias convertFromSnakeCaseToCamelCase
+     *
+     * @param string $source
+     * @return string
+     */
+    public function sc2cc(string $source): string
+    {
+        return $this->convertFromSnakeCaseToCamelCase($source);
+    }
+
+    /**
+     * Convert string from camel case to snake case.
+     *
+     * @param string $source
+     * @return string
+     */
+    public function convertFromCamelCaseToSnakeCase(string $source): string
+    {
+        return preg_replace_callback('/([A-Z]+[^A-Z]*)/', function ($m) {
+            return '_' . strtolower($m[1]);
+        }, $sourde);
+    }
+
+    /**
+     * Convert string from snake case to camel case.
+     *
+     * @return void
+     */
+    public function convertFromSnakeCaseToCamelCase(string $source): string
+    {
+        return preg_replace_callback('/(\_[a-z])/', function ($m) {
+            return strtoupper(substr($m[1], 1));
+        }, $sourde);
+    }
+
 }

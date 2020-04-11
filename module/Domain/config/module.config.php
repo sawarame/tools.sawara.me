@@ -18,6 +18,7 @@ return [
     'service_manager' => [
         'factories' => [
             Service\DateTimeService::class => Service\Factory\DateTimeServiceFactory::class,
+            Service\StringService::class => Service\Factory\StringServiceFactory::class,
         ]
     ],
 ];

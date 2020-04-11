@@ -10,7 +10,8 @@
     <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
     <?= $this->translate('You can get the datetime converted to various format.', 'date') ?>
 </p>
-<form class="form-inline">
+
+<?= $this->form()->openTag($form->setAttribute('class', 'form-inline')) ?>
     <div class="form-group">
         <?= $this->formLabel($form->get('q')
             ->setLabel($this->translate('Datetime', 'date'))
@@ -20,7 +21,7 @@
         <button type="submit" class="btn btn-primary ml-2 mb-2"><?= $this->translate('Submit', 'date') ?></button>
         <?= $this->bs4FormElementErrors($form->get('q')) ?>
     </div>
-</form>
+<?= $this->form()->closeTag() ?>
 
 <?php if (isset($date)) : ?>
     <table class="table">

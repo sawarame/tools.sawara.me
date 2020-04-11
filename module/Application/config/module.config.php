@@ -47,6 +47,16 @@ return [
                     ],
                 ],
             ],
+            'password' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/password',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'password',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
@@ -70,6 +80,12 @@ return [
                 'text_domain' => 'date',
                 'locale' => 'ja_JP',
             ],
+            [
+                'type' => 'phparray',
+                'filename' => __DIR__ . '/../languages/password/ja_JP.php',
+                'text_domain' => 'password',
+                'locale' => 'ja_JP',
+            ],
         ],
     ],
     'view_manager' => [
@@ -80,7 +96,7 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            //'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            //'application/index/index' => __DIR__ . '/../view/application/index/index.sphtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ],

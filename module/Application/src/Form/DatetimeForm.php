@@ -11,7 +11,7 @@ class DatetimeForm extends Form
 
     public function __construct(array $data)
     {
-        parent::__construct('unixtime-form');
+        parent::__construct('date-form');
         $this->setAttribute('method', 'get');
         $this->setElements();
         $this->setData($data);
