@@ -1,11 +1,11 @@
 <?php
 
-namespace Domain\Service;
+namespace Domain\Service\Logic;
 
 use DateTimeImmutable;
 use DateTimeInterface;
 
-class DateTimeService
+class DateTimeLogic
 {
     private const TIME_ZONE = 'Asia/Tokyo';
 
@@ -17,43 +17,6 @@ class DateTimeService
     public function __construct()
     {
         date_default_timezone_set(self::TIME_ZONE);
-    }
-
-    /**
-     * Generate date string datas from source string.
-     *
-     * @param string $source source string.
-     * @return array
-     */
-    public function generateDateStrings(string $source = null): array
-    {
-        $dateTime = $this->generateDateTime($source);
-        return [
-            'Original string'   => $source,
-            'Y年m月d日 H:i:s'   => $dateTime->format('Y年m月d日 H:i:s'),
-            'Y年m月d日 H:i:s.u' => $dateTime->format('Y年m月d日 H:i:s.u'),
-            'Y-m-d H:i:s'       => $dateTime->format('Y-m-d H:i:s'),
-            'Y-m-d H:i:s.u'     => $dateTime->format('Y-m-d H:i:s.u'),
-            'Y/m/d H:i:s'       => $dateTime->format('Y/m/d H:i:s'),
-            'Y/m/d H:i:s.u'     => $dateTime->format('Y/m/d H:i:s.u'),
-            'YmdHis'            => $dateTime->format('YmdHis'),
-            'unixtime'          => $dateTime->getTimestamp(),
-            'millisecond'       => $dateTime->getTimestamp() . $dateTime->format('v'),
-            'microsecond'       => $dateTime->getTimestamp() . $dateTime->format('u'),
-            'ATOM'              => $dateTime->format(DateTImeInterface::ATOM),
-            'COOKIE'            => $dateTime->format(DateTImeInterface::COOKIE),
-            'ISO8601'           => $dateTime->format(DateTImeInterface::ISO8601),
-            'RFC822'            => $dateTime->format(DateTImeInterface::RFC822),
-            'RFC850'            => $dateTime->format(DateTImeInterface::RFC850),
-            'RFC1036'           => $dateTime->format(DateTImeInterface::RFC1036),
-            'RFC1123'           => $dateTime->format(DateTImeInterface::RFC1123),
-            'RFC7231'           => $dateTime->format(DateTImeInterface::RFC7231),
-            'RFC2822'           => $dateTime->format(DateTImeInterface::RFC2822),
-            'RFC3339'           => $dateTime->format(DateTImeInterface::RFC3339),
-            'RFC3339_EXTENDED'  => $dateTime->format(DateTImeInterface::RFC3339_EXTENDED),
-            'RSS'               => $dateTime->format(DateTImeInterface::RSS),
-            'W3C'               => $dateTime->format(DateTImeInterface::W3C),
-        ];
     }
 
     /**

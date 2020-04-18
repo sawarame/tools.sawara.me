@@ -6,7 +6,7 @@ use Laminas\Form\Form;
 use Laminas\Filter;
 use Laminas\Validator;
 
-class DatetimeForm extends Form
+class DateTimeForm extends Form
 {
     public const TEXT_DATETIME_QUERY = 'q';
 
@@ -18,7 +18,7 @@ class DatetimeForm extends Form
         $this->setData($data);
     }
 
-    public function setElements(): DatetimeForm
+    public function setElements(): DateTimeForm
     {
         // for input unixtime.
         $this->add([

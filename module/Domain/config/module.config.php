@@ -17,8 +17,9 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 return [
     'service_manager' => [
         'factories' => [
-            Service\DateTimeService::class => Service\Factory\DateTimeServiceFactory::class,
-            Service\StringService::class => Service\Factory\StringServiceFactory::class,
+            Service\IndexService::class => Service\Factory\IndexServiceFactory::class,
+            Service\Logic\DateTimeLogic::class => InvokableFactory::class,
+            Service\Logic\StringLogic::class => InvokableFactory::class,
         ]
     ],
 ];

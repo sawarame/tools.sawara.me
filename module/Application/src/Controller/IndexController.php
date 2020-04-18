@@ -18,17 +18,14 @@ use Domain\Service;
 class IndexController extends AbstractActionController
 {
     private $translator;
-    private $dateTimeService;
-    private $stringService;
+    private $service;
 
     public function __construct(
         $translator,
-        Service\DateTimeService $dateTimeService,
-        Service\StringService $stringService
+        Service\IndexService $service
     ) {
         $this->translator = $translator;
-        $this->dateTimeService = $dateTimeService;
-        $this->stringService = $stringService;
+        $this->service = $service;
     }
 
     public function indexAction(): ViewModel
@@ -44,14 +41,14 @@ class IndexController extends AbstractActionController
     public function dateAction(): ViewModel
     {
         $response = [];
-        $form = new Form\DatetimeForm($this->params()->fromQuery());
+        $form = new Form\DateTimeForm($this->params()->fromQuery());
         $response['form'] = $form;
 
         if ($form->isValid()) {
             try {
-                $response['date'] = $this->dateTimeService->generateDateStrings($form->getData()['q']);
+                $response['date'] = $this->service->generateDateStrings($form->getData()['q']);
             } catch (\Exception $e) {
-                $form->get(Form\DatetimeForm::TEXT_DATETIME_QUERY)
+                $form->get(Form\DateTimeForm::TEXT_DATETIME_QUERY)
                     ->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
             }
         }
@@ -70,7 +67,7 @@ class IndexController extends AbstractActionController
 
         $query = $this->params()->fromQuery();
 
-        // set default;
+        // set defaults;
         $query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS] =
             isset($query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS])
             ? (int) $query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS] : 16;
@@ -89,7 +86,7 @@ class IndexController extends AbstractActionController
 
         if ($form->isValid()) {
             $values = $form->getData();
-            $response['password'] = $this->stringService->generatePasswords(
+            $response['password'] = $this->service->generatePasswords(
                 $query[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS],
                 $query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS],
                 str_split($query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS]),

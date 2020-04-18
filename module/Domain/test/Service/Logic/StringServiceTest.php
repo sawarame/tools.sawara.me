@@ -2,49 +2,49 @@
 
 declare(strict_types=1);
 
-namespace DomainTest\Controller;
+namespace DomainTest\Service\Test;
 
 use DateTimeImmutable;
 use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
-use Domain\Service\StringService;
+use Domain\Service\Logic\StringLogic;
 
-class StringServiceTest extends TestCase
+class StringLogicTest extends TestCase
 {
-    private $service = null;
+    private $logic = null;
 
     public function setUp(): void
     {
-        $this->service = new StringService();
+        $this->logic = new StringLogic();
     }
 
     public function testGenerateGraphPassword()
     {
         $length = 12;
-        $result = $this->service->generateGraphPassword($length);
+        $result = $this->logic->generateGraphPassword($length);
         $this->assertRegExp('/^[!-~]{' . $length . '}$/', $result);
 
-        $result = $this->service->generateGraphPassword($length, ['0', '1', '2']);
+        $result = $this->logic->generateGraphPassword($length, ['0', '1', '2']);
         $this->assertRegExp('/^[^012]{' . $length . '}$/', $result);
     }
 
     public function testGenerateAlnumPassword()
     {
         $length = 12;
-        $result = $this->service->generateAlnumPassword($length);
+        $result = $this->logic->generateAlnumPassword($length);
         $this->assertRegExp('/^[0-9A-Za-z]{' . $length . '}$/', $result);
 
-        $result = $this->service->generateAlnumPassword($length, ['0', '1', '2']);
+        $result = $this->logic->generateAlnumPassword($length, ['0', '1', '2']);
         $this->assertRegExp('/^[^012]{' . $length . '}$/', $result);
     }
 
     public function testGenerateAlphaPassword()
     {
         $length = 12;
-        $result = $this->service->generateAlphaPassword($length);
+        $result = $this->logic->generateAlphaPassword($length);
         $this->assertRegExp('/^[A-Za-z]{' . $length . '}$/', $result);
 
-        $result = $this->service->generateAlnumPassword($length, ['a', 'b', 'c']);
+        $result = $this->logic->generateAlnumPassword($length, ['a', 'b', 'c']);
         $this->assertRegExp('/^[^abc]{' . $length . '}$/', $result);
     }
 
@@ -52,7 +52,7 @@ class StringServiceTest extends TestCase
     {
         $useChars = range('!', '~');
         $length = 12;
-        $result = $this->service->generatePassword($useChars, $length);
+        $result = $this->logic->generatePassword($useChars, $length);
         $this->assertRegExp('/^[!-~]{' . $length . '}$/', $result);
     }
 }

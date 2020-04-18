@@ -1,47 +1,11 @@
 <?php
 
-namespace Domain\Service;
+namespace Domain\Service\Logic;
 
-use DateTimeImmutable;
-use DateTimeInterface;
 use Laminas\Stdlib\ArrayUtils;
 
-class StringService
+class StringLogic
 {
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * Genarate some passwords
-     *
-     * @return void
-     */
-    public function generatePasswords(
-        int $number,
-        int $length,
-        array $exclude = [],
-        bool $isAllowedSameChar = false
-    ) {
-        $graph = [];
-        $alnum = [];
-        $alpha = [];
-        for ($i = 0; $i < $number; $i++) {
-            $graph[] = $this->generateGraphPassword($length, $exclude, $isAllowedSameChar);
-            $alnum[] = $this->generateAlnumPassword($length, $exclude, $isAllowedSameChar);
-            $alpha[] = $this->generateAlphaPassword($length, $exclude, $isAllowedSameChar);
-        }
-
-        return [
-            'graph' => $graph,
-            'alnum' => $alnum,
-            'alpha' => $alpha,
-        ];
-    }
-
     /**
      * Filter characters.
      *
