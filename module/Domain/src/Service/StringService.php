@@ -49,7 +49,8 @@ class StringService
      * @param array $exclude
      * @return void
      */
-    public function filterUseCharacters(array $chars, array $exclude) {
+    public function filterUseCharacters(array $chars, array $exclude)
+    {
         $useChars = array_filter($chars, function ($var) use ($exclude) {
             return ! ArrayUtils::inArray($var, $exclude);
         });
@@ -162,5 +163,4 @@ class StringService
             return strtoupper(substr($m[1], 1));
         }, $sourde);
     }
-
 }

@@ -8,6 +8,7 @@ use Laminas\Validator;
 
 class DatetimeForm extends Form
 {
+    public const TEXT_DATETIME_QUERY = 'q';
 
     public function __construct(array $data)
     {
@@ -22,13 +23,13 @@ class DatetimeForm extends Form
         // for input unixtime.
         $this->add([
             'type' => 'text',
-            'name' => 'q',
+            'name' => self::TEXT_DATETIME_QUERY,
         ]);
 
         $inputFilter = $this->getInputFilter();
 
         $inputFilter->add([
-            'name'     => 'q',
+            'name'     => self::TEXT_DATETIME_QUERY,
             'filters'  => [
                 [
                     'name' => Filter\StringTrim::class

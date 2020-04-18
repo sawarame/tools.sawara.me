@@ -51,7 +51,8 @@ class IndexController extends AbstractActionController
             try {
                 $response['date'] = $this->dateTimeService->generateDateStrings($form->getData()['q']);
             } catch (\Exception $e) {
-                $form->get('q')->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
+                $form->get(Form\DatetimeForm::TEXT_DATETIME_QUERY)
+                    ->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
             }
         }
 
@@ -78,7 +79,7 @@ class IndexController extends AbstractActionController
             ? (int) $query[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS] : 3;
         $query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS] =
             isset($query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS])
-            ? $query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS] : ',\'"*\\¥';
+            ? $query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS] : '';
         $query[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] =
             isset($query[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER])
             ? (int) $query[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] : 0;
