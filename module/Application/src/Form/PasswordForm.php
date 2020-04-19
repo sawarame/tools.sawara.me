@@ -5,6 +5,7 @@ namespace Application\Form;
 use Laminas\Form\Form;
 use Laminas\Filter;
 use Laminas\Validator;
+use Application\Filter\DefaultFilter;
 
 class PasswordForm extends Form
 {
@@ -48,6 +49,12 @@ class PasswordForm extends Form
                 [
                     'name' => Filter\StringTrim::class
                 ],
+                [
+                    'name' => DefaultFilter::class,
+                    'options' => [
+                        'default' => 16,
+                    ],
+                ],
             ],
             'required' => false,
             'validators' => [
@@ -64,12 +71,17 @@ class PasswordForm extends Form
             ],
         ]);
 
-
         $inputFilter->add([
             'name'     => self::TEXT_NUMBER_OF_PASSWORDS,
             'filters'  => [
                 [
                     'name' => Filter\StringTrim::class
+                ],
+                [
+                    'name' => DefaultFilter::class,
+                    'options' => [
+                        'default' => 3,
+                    ],
                 ],
             ],
             'required' => false,
@@ -87,6 +99,37 @@ class PasswordForm extends Form
             ],
         ]);
 
+        $inputFilter->add([
+            'name'     => self::TEXT_EXCLUDE_CHARACTERS,
+            'filters'  => [
+                [
+                    'name' => Filter\StringTrim::class
+                ],
+                [
+                    'name' => DefaultFilter::class,
+                    'options' => [
+                        'default' => '',
+                    ],
+                ],
+            ],
+            'required' => false,
+        ]);
+
+        $inputFilter->add([
+            'name'     => self::CHECKBOX_IS_DISALLOW_SAME_CHARACTER,
+            'filters'  => [
+                [
+                    'name' => Filter\StringTrim::class
+                ],
+                [
+                    'name' => DefaultFilter::class,
+                    'options' => [
+                        'default' => 1,
+                    ],
+                ],
+            ],
+            'required' => false,
+        ]);
 
         return $this;
     }

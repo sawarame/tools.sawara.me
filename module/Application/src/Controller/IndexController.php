@@ -65,31 +65,15 @@ class IndexController extends AbstractActionController
     {
         $response = [];
 
-        $query = $this->params()->fromQuery();
-
-        // set defaults;
-        $query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS] =
-            isset($query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS])
-            ? (int) $query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS] : 16;
-        $query[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS] =
-            isset($query[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS])
-            ? (int) $query[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS] : 3;
-        $query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS] =
-            isset($query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS])
-            ? $query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS] : '';
-        $query[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] =
-            isset($query[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER])
-            ? (int) $query[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] : 0;
-
-        $form = new Form\PasswordForm($query);
+        $form = new Form\PasswordForm($this->params()->fromQuery());
         $response['form'] = $form;
 
         if ($form->isValid()) {
             $values = $form->getData();
             $response['password'] = $this->service->generatePasswords(
-                $query[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS],
-                $query[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS],
-                str_split($query[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS]),
+                $values[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS],
+                $values[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS],
+                str_split($values[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS]),
                 $values[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] ? false : true
             );
         }
