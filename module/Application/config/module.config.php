@@ -116,4 +116,7 @@ return [
             'Bs4FormElementErrors' => View\Helper\Bs4FormElementErrors::class,
         ],
     ],
+    'forms' => [
+
+    ],
 ];

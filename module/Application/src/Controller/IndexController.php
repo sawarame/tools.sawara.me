@@ -76,6 +76,7 @@ class IndexController extends AbstractActionController
                 str_split($values[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS]),
                 $values[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] ? false : true
             );
+            $form->setData($values);
         }
 
         return new ViewModel($response);

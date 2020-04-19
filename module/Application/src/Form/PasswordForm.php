@@ -4,62 +4,52 @@ namespace Application\Form;
 
 use Laminas\Form\Form;
 use Laminas\Filter;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
-use Application\Filter\DefaultFilter;
+use Application\Filter as ApplicationFilter;
 
-class PasswordForm extends Form
+class PasswordForm extends Form implements InputFilterProviderInterface
 {
     public const TEXT_NUMBER_OF_CHARACTERS = 'noc';
     public const TEXT_NUMBER_OF_PASSWORDS = 'nop';
     public const TEXT_EXCLUDE_CHARACTERS = 'exc';
     public const CHECKBOX_IS_DISALLOW_SAME_CHARACTER = 'dsc';
 
-    public function __construct(array $data)
-    {
-        parent::__construct('password-form');
-        $this->setAttribute('method', 'get');
-        $this->setElements();
-        $this->setData($data);
-    }
-
-    public function setElements(): PasswordForm
-    {
-        $this->add([
+    private const ELEMENTS = [
+        self::TEXT_NUMBER_OF_CHARACTERS => [
             'type' => 'text',
-            'name' => self::TEXT_NUMBER_OF_CHARACTERS,
-        ]);
-        $this->add([
+        ],
+        self::TEXT_NUMBER_OF_PASSWORDS => [
             'type' => 'text',
-            'name' => self::TEXT_NUMBER_OF_PASSWORDS,
-        ]);
-        $this->add([
+        ],
+        self::TEXT_EXCLUDE_CHARACTERS => [
             'type' => 'text',
-            'name' => self::TEXT_EXCLUDE_CHARACTERS,
-        ]);
-        $this->add([
+        ],
+        self::CHECKBOX_IS_DISALLOW_SAME_CHARACTER => [
             'type' => 'checkbox',
-            'name' => self::CHECKBOX_IS_DISALLOW_SAME_CHARACTER,
-        ]);
+        ],
+    ];
 
-        $inputFilter = $this->getInputFilter();
-
-        $inputFilter->add([
-            'name'     => self::TEXT_NUMBER_OF_CHARACTERS,
+    private const INPUT_FILTERS = [
+        self::TEXT_NUMBER_OF_CHARACTERS => [
+            'required' => false,
             'filters'  => [
                 [
-                    'name' => Filter\StringTrim::class
+                    'name' => ApplicationFilter\Zen2Han::class
                 ],
                 [
-                    'name' => DefaultFilter::class,
+                    'name' => Filter\ToInt::class
+                ],
+                [
+                    'name' => ApplicationFilter\DefaultValue::class,
                     'options' => [
                         'default' => 16,
                     ],
                 ],
             ],
-            'required' => false,
             'validators' => [
                 [
-                    'name'    => Validator\Digits::class,
+                    'name' => Validator\Digits::class,
                 ],
                 [
                     'name'    => Validator\Between::class,
@@ -69,22 +59,23 @@ class PasswordForm extends Form
                     ],
                 ],
             ],
-        ]);
-
-        $inputFilter->add([
-            'name'     => self::TEXT_NUMBER_OF_PASSWORDS,
+        ],
+        self::TEXT_NUMBER_OF_PASSWORDS => [
+            'required' => false,
             'filters'  => [
                 [
-                    'name' => Filter\StringTrim::class
+                    'name' => ApplicationFilter\Zen2Han::class
                 ],
                 [
-                    'name' => DefaultFilter::class,
+                    'name' => Filter\ToInt::class
+                ],
+                [
+                    'name' => ApplicationFilter\DefaultValue::class,
                     'options' => [
                         'default' => 3,
                     ],
                 ],
             ],
-            'required' => false,
             'validators' => [
                 [
                     'name'    => Validator\Digits::class,
@@ -97,40 +88,52 @@ class PasswordForm extends Form
                     ],
                 ],
             ],
-        ]);
-
-        $inputFilter->add([
-            'name'     => self::TEXT_EXCLUDE_CHARACTERS,
+        ],
+        self::TEXT_EXCLUDE_CHARACTERS => [
+            'required' => false,
             'filters'  => [
                 [
                     'name' => Filter\StringTrim::class
                 ],
                 [
-                    'name' => DefaultFilter::class,
+                    'name' => ApplicationFilter\DefaultValue::class,
                     'options' => [
                         'default' => '',
                     ],
                 ],
             ],
+        ],
+        self::CHECKBOX_IS_DISALLOW_SAME_CHARACTER => [
             'required' => false,
-        ]);
-
-        $inputFilter->add([
-            'name'     => self::CHECKBOX_IS_DISALLOW_SAME_CHARACTER,
             'filters'  => [
                 [
-                    'name' => Filter\StringTrim::class
-                ],
-                [
-                    'name' => DefaultFilter::class,
+                    'name' => ApplicationFilter\DefaultValue::class,
                     'options' => [
                         'default' => 1,
                     ],
                 ],
             ],
-            'required' => false,
-        ]);
+        ],
+    ];
 
-        return $this;
+    /**
+     * Constructor.
+     * set element and set data.
+     *
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        parent::__construct('password-form');
+        $this->setAttribute('method', 'get');
+        foreach (self::ELEMENTS as $key => $element) {
+            $this->add(array_merge(['name' => $key], $element));
+        }
+        $this->setData($data);
+    }
+
+    public function getInputFilterSpecification()
+    {
+        return self::INPUT_FILTERS;
     }
 }

@@ -10,6 +10,7 @@ class IndexServiceFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
+        $options = $options ?: null;
         $dateTimeLogic = $container->get(Logic\DateTimeLogic::class);
         $stringLogic = $container->get(Logic\StringLogic::class);
         return new $requestedName(

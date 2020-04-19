@@ -4,38 +4,27 @@ namespace Application\Form;
 
 use Laminas\Form\Form;
 use Laminas\Filter;
+use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
 
-class DateTimeForm extends Form
+class DateTimeForm extends Form implements InputFilterProviderInterface
 {
     public const TEXT_DATETIME_QUERY = 'q';
 
-    public function __construct(array $data)
-    {
-        parent::__construct('date-form');
-        $this->setAttribute('method', 'get');
-        $this->setElements();
-        $this->setData($data);
-    }
-
-    public function setElements(): DateTimeForm
-    {
-        // for input unixtime.
-        $this->add([
+    private const ELEMENTS = [
+        self::TEXT_DATETIME_QUERY => [
             'type' => 'text',
-            'name' => self::TEXT_DATETIME_QUERY,
-        ]);
+        ],
+    ];
 
-        $inputFilter = $this->getInputFilter();
-
-        $inputFilter->add([
-            'name'     => self::TEXT_DATETIME_QUERY,
+    private const INPUT_FILTERS = [
+        self::TEXT_DATETIME_QUERY => [
+            'required' => false,
             'filters'  => [
                 [
                     'name' => Filter\StringTrim::class
                 ],
             ],
-            'required' => false,
             'validators' => [
                 [
                     'name'    => Validator\StringLength::class,
@@ -44,8 +33,27 @@ class DateTimeForm extends Form
                     ],
                 ],
             ],
-        ]);
+        ],
+    ];
 
-        return $this;
+    /**
+     * Constructor.
+     * set element and set data.
+     *
+     * @param array $data
+     */
+    public function __construct(array $data)
+    {
+        parent::__construct('date-form');
+        $this->setAttribute('method', 'get');
+        foreach (self::ELEMENTS as $key => $element) {
+            $this->add(array_merge(['name' => $key], $element));
+        }
+        $this->setData($data);
+    }
+
+    public function getInputFilterSpecification()
+    {
+        return self::INPUT_FILTERS;
     }
 }

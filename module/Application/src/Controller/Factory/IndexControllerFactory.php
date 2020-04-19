@@ -9,8 +9,9 @@ use Domain\Service;
 
 class IndexControllerFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, $options = null)
     {
+        $options = $options ?: null;
         $translator = $container->get(Translator::class);
         $service = $container->get(Service\IndexService::class);
 

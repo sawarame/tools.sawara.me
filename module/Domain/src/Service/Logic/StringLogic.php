@@ -113,7 +113,7 @@ class StringLogic
     {
         return preg_replace_callback('/([A-Z]+[^A-Z]*)/', function ($m) {
             return '_' . strtolower($m[1]);
-        }, $sourde);
+        }, $source);
     }
 
     /**
@@ -125,6 +125,6 @@ class StringLogic
     {
         return preg_replace_callback('/(\_[a-z])/', function ($m) {
             return strtoupper(substr($m[1], 1));
-        }, $sourde);
+        }, $source);
     }
 }

@@ -3,9 +3,8 @@
 namespace Application\Filter;
 
 use Laminas\Filter\AbstractFilter;
-use Traversable;
 
-class DefaultFilter extends AbstractFilter
+class DefaultValue extends AbstractFilter
 {
     private $defaultValue = '';
 
