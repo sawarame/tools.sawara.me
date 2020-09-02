@@ -16,9 +16,10 @@ return [
     'service_manager' => [
         'factories' => [
             Service\IndexService::class => Service\Factory\IndexServiceFactory::class,
-            Service\Logic\DateTimeLogic::class => Service\Logic\DateTimeLogicFactory::class,
-            Service\Logic\dateTimeUtilLogic::class => InvokableFactory::class,
-            Service\Logic\StringLogic::class => InvokableFactory::class,
+            Service\Logic\DateTimeLogic::class => Service\Logic\Factory\DateTimeLogicFactory::class,
+            Service\Logic\DateTimeUtilLogic::class => InvokableFactory::class,
+            Service\Logic\PasswordLogic::class => Service\Logic\Factory\PasswordLogicFactory::class,
+            Service\Logic\PasswordUtilLogic::class => InvokableFactory::class,
         ]
     ],
 ];

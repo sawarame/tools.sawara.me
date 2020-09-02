@@ -12,10 +12,10 @@ class IndexServiceFactory implements FactoryInterface
     {
         $options = $options ?: null;
         $dateTimeLogic = $container->get(Logic\DateTimeLogic::class);
-        $stringLogic = $container->get(Logic\StringLogic::class);
+        $passwordLogic = $container->get(Logic\PasswordLogic::class);
         return new $requestedName(
             $dateTimeLogic,
-            $stringLogic
+            $passwordLogic
         );
     }
 }
