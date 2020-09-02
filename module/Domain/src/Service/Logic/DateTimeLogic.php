@@ -9,13 +9,16 @@ class DateTimeLogic
 {
     private const TIME_ZONE = 'Asia/Tokyo';
 
+    private $dateTimeCheckLogic;
+
     /**
      * Constructor.
      *
      * Set default timezone.
      */
-    public function __construct()
+    public function __construct(DateTimeUtilLogic $dateTimeCheckLogic)
     {
+        $this->dateTimeCheckLogic = $dateTimeCheckLogic;
         date_default_timezone_set(self::TIME_ZONE);
     }
 
@@ -31,16 +34,16 @@ class DateTimeLogic
             case is_null($source):
             case $source === "":
                 return new DateTimeImmutable();
-            case $this->isUnixtime($source):
+            case $this->dateTimeCheckLogic->isUnixtime($source):
                 return new DateTimeImmutable(date(DateTimeInterface::ISO8601, $source));
-            case $this->isMillisecond($source):
+            case $this->dateTimeCheckLogic->isMillisecond($source):
                 return new DateTimeImmutable(date('Y-m-d H:i:s', substr($source, 0, 10))
                     . '.' . substr($source, 10, 3));
-            case $this->isMicrotime($source):
+            case $this->dateTimeCheckLogic->isMicrotime($source):
                 list($dec, $int) = preg_split('/\s/', $source);
                 return new DateTimeImmutable(date('Y-m-d H:i:s', $int)
                     . '.' . substr($dec, 2, 6));
-            case $this->isMicrosecond($source):
+            case $this->dateTimeCheckLogic->isMicrosecond($source):
                 return new DateTimeImmutable(date('Y-m-d H:i:s', substr($source, 0, 10))
                     . '.' . substr($source, 10, 6));
             default:
@@ -51,61 +54,5 @@ class DateTimeLogic
                 // TODO: should catch exception.
                 return new DateTimeImmutable(date(DateTimeInterface::ISO8601, $timestamp));
         }
-    }
-
-    /**
-     * Test whether a source is unixtime.
-     *
-     * @param string $source
-     * @return boolean
-     */
-    public function isUnixtime(string $source): bool
-    {
-        if (preg_match('/^\d{10}$/u', $source)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Test whether a source is millisecond.
-     *
-     * @param mixed $source
-     * @return bool
-     */
-    public function isMillisecond(string $source): bool
-    {
-        if (preg_match('/^\d{13}$/', $source)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Test whether a source is microtime.
-     *
-     * @param string $source
-     * @return boolean
-     */
-    public function isMicrotime(string $source): bool
-    {
-        if (preg_match('/^0\.\d{6,8}\s\d{10}$/', $source)) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Test whether a source is microsecond.
-     *
-     * @param string $source
-     * @return boolean
-     */
-    public function isMicrosecond(string $source): bool
-    {
-        if (preg_match('/^\d{16}$/', $source)) {
-            return true;
-        }
-        return false;
     }
 }

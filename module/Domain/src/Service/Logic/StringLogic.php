@@ -13,7 +13,7 @@ class StringLogic
      * @param array $exclude
      * @return void
      */
-    public function filterUseCharacters(array $chars, array $exclude)
+    public function filterUseCharacters(array $chars, array $exclude): array
     {
         $useChars = array_filter($chars, function ($var) use ($exclude) {
             return ! ArrayUtils::inArray($var, $exclude);
