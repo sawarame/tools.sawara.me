@@ -65,12 +65,12 @@ class DateTimeLogic
     public function generateDateStrings(DateTimeImmutable $dateTime): array
     {
         return [
-            'Y年m月d日 H:i:s'   => $dateTime->format('Y年m月d日 H:i:s'),
-            'Y年m月d日 H:i:s.u' => $dateTime->format('Y年m月d日 H:i:s.u'),
             'Y-m-d H:i:s'       => $dateTime->format('Y-m-d H:i:s'),
             'Y-m-d H:i:s.u'     => $dateTime->format('Y-m-d H:i:s.u'),
             'Y/m/d H:i:s'       => $dateTime->format('Y/m/d H:i:s'),
             'Y/m/d H:i:s.u'     => $dateTime->format('Y/m/d H:i:s.u'),
+            'Y年m月d日 H:i:s'   => $dateTime->format('Y年m月d日 H:i:s'),
+            'Y年m月d日 H:i:s.u' => $dateTime->format('Y年m月d日 H:i:s.u'),
             'YmdHis'            => $dateTime->format('YmdHis'),
             'unixtime'          => $dateTime->getTimestamp(),
             'millisecond'       => $dateTime->getTimestamp() . $dateTime->format('v'),
