@@ -5,60 +5,74 @@ declare(strict_types=1);
 namespace DomainTest\Service\Logic;
 
 use DateTimeImmutable;
-use DateTimeInterface;
 use PHPUnit\Framework\TestCase;
 use Domain\Service\Logic\DateTimeLogic;
+use Domain\Service\Logic\DateTimeUtilLogic;
 
 class DateTimeLogicTest extends TestCase
 {
     private $logic = null;
+    private $util = null;
 
     public function setUp(): void
     {
-        $this->logic = new DateTimeLogic();
+        $this->util = $this->createMock(DateTimeUtilLogic::class);
+        $this->logic = new DateTimeLogic($this->util);
     }
 
     public function testGenerateDateTime()
     {
+        $this->util->method('isUnixtime')->willReturn(false);
+        $this->util->method('isMillisecond')->willReturn(false);
+        $this->util->method('isMicrotime')->willReturn(false);
+        $this->util->method('isMicrosecond')->willReturn(false);
         $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime());
+        $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime('2020-04-04T10:51:26'));
+    }
+
+    public function testGenerateDateTimeUnixTime()
+    {
+        $this->util->method('isUnixtime')->willReturn(true);
+        $this->util->method('isMillisecond')->willReturn(false);
+        $this->util->method('isMicrotime')->willReturn(false);
+        $this->util->method('isMicrosecond')->willReturn(false);
         $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime('1585965086'));
+    }
+
+    public function testGenerateDateMillisecond()
+    {
+        $this->util->method('isUnixtime')->willReturn(false);
+        $this->util->method('isMillisecond')->willReturn(true);
+        $this->util->method('isMicrotime')->willReturn(false);
+        $this->util->method('isMicrosecond')->willReturn(false);
         $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime('1585965086123'));
+    }
+
+    public function testGenerateDateMicrotime()
+    {
+        $this->util->method('isUnixtime')->willReturn(false);
+        $this->util->method('isMillisecond')->willReturn(false);
+        $this->util->method('isMicrotime')->willReturn(true);
+        $this->util->method('isMicrosecond')->willReturn(false);
         $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime(microtime()));
+    }
+
+    public function testGenerateDateMicrosecond()
+    {
+        $this->util->method('isUnixtime')->willReturn(false);
+        $this->util->method('isMillisecond')->willReturn(false);
+        $this->util->method('isMicrotime')->willReturn(false);
+        $this->util->method('isMicrosecond')->willReturn(true);
         $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime('1585965086123456'));
-        $this->assertInstanceOf(DateTimeImmutable::class, $this->logic->generateDateTime(' 2020-04-04T10:51:26'));
     }
 
     public function testGenerateDateTimeError()
     {
+        $this->util->method('isUnixtime')->willReturn(false);
+        $this->util->method('isMillisecond')->willReturn(false);
+        $this->util->method('isMicrotime')->willReturn(false);
+        $this->util->method('isMicrosecond')->willReturn(false);
         $this->expectException(\Exception::class);
         $this->logic->generateDateTime('aaaa');
-    }
-
-    public function testIsUnixtime()
-    {
-        $this->assertTrue($this->logic->isUnixtime('1585965086'));
-        $this->assertFalse($this->logic->isUnixtime('15859650861'));
-        $this->assertFalse($this->logic->isUnixtime('aaa'));
-    }
-
-    public function testIsMillisecond()
-    {
-        $this->assertTrue($this->logic->isMillisecond('1585965086123'));
-        $this->assertFalse($this->logic->isMillisecond('aaa'));
-    }
-
-    public function testIsMicrotime()
-    {
-        $this->assertTrue($this->logic->isMicrotime('0.14636600 1585965086'));
-        $this->assertFalse($this->logic->isMicrotime('1585965086'));
-        $this->assertFalse($this->logic->isMicrotime('aaa'));
-    }
-
-    public function testIsMicrosecond()
-    {
-        $this->assertTrue($this->logic->isMicrosecond('1585965086123456'));
-        $this->assertFalse($this->logic->isMicrosecond('0.14636600 1585965086'));
-        $this->assertFalse($this->logic->isMicrosecond('1585965086'));
-        $this->assertFalse($this->logic->isMicrosecond('aaa'));
     }
 }

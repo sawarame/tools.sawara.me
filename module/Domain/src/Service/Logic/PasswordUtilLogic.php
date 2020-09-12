@@ -19,9 +19,9 @@ class PasswordUtilLogic
             return ! ArrayUtils::inArray($var, $exclude);
         });
         if ($useChars) {
-            return $useChars;
+            return array_values($useChars);
         }
-        return $chars;
+        return array_values($chars);
     }
 
     /**
@@ -31,12 +31,11 @@ class PasswordUtilLogic
      * @param integer $length
      * @return string
      */
-    public function generatePassword(array $useChars, int $length, bool $isAllowedSameChar = false): string
+    public function generate(array $useChars, int $length, bool $isAllowedSameChar = false): string
     {
         if (! $isAllowedSameChar && count($useChars) < $length) {
             $isAllowedSameChar = true;
         }
         return substr(str_shuffle(str_repeat(implode('', $useChars), ($isAllowedSameChar ? $length : 1))), 0, $length);
     }
-
 }

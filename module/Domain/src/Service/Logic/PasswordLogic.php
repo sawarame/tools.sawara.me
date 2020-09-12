@@ -28,7 +28,7 @@ class PasswordLogic
     public function generateGraphPassword(int $length, array $exclude = [], bool $isAllowedSameChar = false): string
     {
         $useChars = $this->util->filterUseCharacters(range('!', '~'), $exclude);
-        return $this->util->generatePassword($useChars, $length, $isAllowedSameChar);
+        return $this->util->generate($useChars, $length, $isAllowedSameChar);
     }
 
     /**
@@ -43,7 +43,7 @@ class PasswordLogic
         $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
         $digits = range('0', '9');
         $useChars = $this->util->filterUseCharacters(ArrayUtils::merge($letters, $digits), $exclude);
-        return $this->util->generatePassword($useChars, $length, $isAllowedSameChar);
+        return $this->util->generate($useChars, $length, $isAllowedSameChar);
     }
 
     /**
@@ -57,7 +57,6 @@ class PasswordLogic
     {
         $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
         $useChars = $this->util->filterUseCharacters($letters, $exclude);
-        return $this->util->generatePassword($useChars, $length, $isAllowedSameChar);
+        return $this->util->generate($useChars, $length, $isAllowedSameChar);
     }
-
 }

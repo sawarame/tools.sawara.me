@@ -51,7 +51,7 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "phpmd": "phpmd",
+        "phpmd": "phpmd module text unusedcode,codesize",
         "development-disable": "laminas-development-mode disable",
         "development-enable": "laminas-development-mode enable",
         "development-status": "laminas-development-mode status",
