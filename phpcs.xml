@@ -29,4 +29,8 @@
     <file>config</file>
     <file>module</file>
     <file>public/index.php</file>
+
+    <exclude-pattern>*.phtml</exclude-pattern>
+    <exclude-pattern>*.html</exclude-pattern>
+    <exclude-pattern>module/Application/languages</exclude-pattern>
 </ruleset>

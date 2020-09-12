@@ -1,0 +1,38 @@
+<?php
+
+use Application\Form\DateTimeForm;
+
+?>
+<h1><?= $this->translate('Date format converter', 'date') ?></h1>
+<hr/>
+<p>
+    <?= $this->translate('You can get the datetime converted to various format.', 'date') ?>
+</p>
+<p>
+    <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
+</p>
+
+<?= $this->form()->openTag($form->setAttribute('class', 'form-inline')) ?>
+    <div class="form-group">
+        <?= $this->formLabel($form->get(DateTimeForm::TEXT_DATETIME_QUERY)
+            ->setLabel($this->translate('DateTime', 'date'))
+            ->setLabelAttributes(['class' => 'ml-2 mb-2'])) ?>
+        <?= $this->bs4FormElement($form->get(DateTimeForm::TEXT_DATETIME_QUERY)
+            ->setAttribute('class', 'form-control ml-2 mb-2')) ?>
+        <button type="submit" class="btn btn-primary ml-2 mb-2"><?= $this->translate('Submit', 'date') ?></button>
+        <?= $this->bs4FormElementErrors($form->get(DateTimeForm::TEXT_DATETIME_QUERY)) ?>
+    </div>
+<?= $this->form()->closeTag() ?>
+
+<?php if (isset($date)) : ?>
+    <table class="table">
+        <tbody>
+            <?php foreach ($date as $key => $value) : ?>
+                <tr>
+                    <th><?= $this->escapeHtml($key) ?></th>
+                    <td><?= $this->escapeHtml($value) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+<?php endif ?>
