@@ -5,6 +5,9 @@ namespace Application\View\Helper;
 use Laminas\Form\ElementInterface;
 use Laminas\Form\View\Helper\FormElement;
 
+/**
+ * Form element render for BootStrap4.
+ */
 class Bs4FormElement extends FormElement
 {
     /**

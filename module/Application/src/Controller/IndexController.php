@@ -34,7 +34,7 @@ class IndexController extends AbstractActionController
     }
 
     /**
-     * Date format conversion tool page.
+     * Date format converter page.
      *
      * @return ViewModel
      */

@@ -3,11 +3,13 @@
 use Application\Form\DateTimeForm;
 
 ?>
-<h1><?= $this->translate('Date format conversion tool', 'date') ?></h1>
+<h1><?= $this->translate('Date format converter', 'date') ?></h1>
 <hr/>
 <p>
-    <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
     <?= $this->translate('You can get the datetime converted to various format.', 'date') ?>
+</p>
+<p>
+    <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
 </p>
 
 <?= $this->form()->openTag($form->setAttribute('class', 'form-inline')) ?>

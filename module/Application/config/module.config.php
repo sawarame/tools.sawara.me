@@ -77,6 +77,12 @@ return [
             ],
             [
                 'type' => 'phparray',
+                'filename' => __DIR__ . '/../languages/index/ja_JP.php',
+                'text_domain' => 'index',
+                'locale' => 'ja_JP',
+            ],
+            [
+                'type' => 'phparray',
                 'filename' => __DIR__ . '/../languages/date/ja_JP.php',
                 'text_domain' => 'date',
                 'locale' => 'ja_JP',
