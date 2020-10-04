@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f20d9f0d357ea261b1262c98105d41d",
+    "content-hash": "bb42d50b5874e9ac69b6d63780328ad6",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -2009,6 +2009,38 @@
                 "psr"
             ],
             "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "sawarame/optional",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sawarame/optional.git",
+                "reference": "5cfcb0adec34bdd0574aa67880c8bab7c0b464a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sawarame/optional/zipball/5cfcb0adec34bdd0574aa67880c8bab7c0b464a8",
+                "reference": "5cfcb0adec34bdd0574aa67880c8bab7c0b464a8",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpmd/phpmd": "^2.8",
+                "phpunit/phpunit": "^9.1",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sawarame\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Optional for PHP.",
+            "time": "2020-05-31T06:45:21+00:00"
         },
         {
             "name": "webimpress/safe-writer",

@@ -65,33 +65,33 @@ return [
         ],
     ],
     'translator' => [
-        'locale' => 'ja_JP',
-        //'locale' => 'en_US',
+        'locale' => 'ja',
+        //'locale' => 'en',
         'translation_files' => [
             [
                 'type' => 'phparray',
                 'filename' =>
                     __DIR__ . '/../../../vendor/laminas/laminas-i18n-resources/languages/ja/Laminas_Validate.php',
                 'text_domain' => 'default',
-                'locale' => 'ja_JP',
+                'locale' => 'ja',
             ],
             [
                 'type' => 'phparray',
-                'filename' => __DIR__ . '/../languages/index/ja_JP.php',
+                'filename' => __DIR__ . '/../languages/index/ja.php',
                 'text_domain' => 'index',
-                'locale' => 'ja_JP',
+                'locale' => 'ja',
             ],
             [
                 'type' => 'phparray',
-                'filename' => __DIR__ . '/../languages/date/ja_JP.php',
+                'filename' => __DIR__ . '/../languages/date/ja.php',
                 'text_domain' => 'date',
-                'locale' => 'ja_JP',
+                'locale' => 'ja',
             ],
             [
                 'type' => 'phparray',
-                'filename' => __DIR__ . '/../languages/password/ja_JP.php',
+                'filename' => __DIR__ . '/../languages/password/ja.php',
                 'text_domain' => 'password',
-                'locale' => 'ja_JP',
+                'locale' => 'ja',
             ],
         ],
     ],
