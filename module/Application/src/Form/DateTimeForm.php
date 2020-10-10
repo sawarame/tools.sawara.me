@@ -44,8 +44,7 @@ class DateTimeForm extends Form implements InputFilterProviderInterface
      */
     public function __construct(array $data)
     {
-        parent::__construct('date-form');
-        $this->setAttribute('method', 'get');
+        parent::__construct();
         foreach (self::ELEMENTS as $key => $element) {
             $this->add(array_merge(['name' => $key], $element));
         }

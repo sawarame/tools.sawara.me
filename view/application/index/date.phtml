@@ -1,0 +1,74 @@
+<div id="date_app">
+    <h1><?= $this->translate('Date format converter', 'date') ?></h1>
+    <hr/>
+    <p>
+        <?= $this->translate('You can get the datetime converted to various format.', 'date') ?>
+    </p>
+    <p>
+        <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
+    </p>
+
+    <form class="form-inline" v-on:submit="submit">
+        <div class="form-group">
+            <label class="ml-2 mb-2" for="q"><?= $this->translate('DateTime', 'date') ?></label>
+            <input type="text" name="q" class="form-control ml-2 mb-2"
+                v-bind:class="{'is-invalid': messages.q}"
+                v-model="formValues.q" />
+            <button type="submit" class="btn btn-primary ml-2 mb-2"><?= $this->translate('Submit', 'date') ?></button>
+
+            <div v-if="messages.q" class="invalid-feedback">
+                <div v-for="(message, key) in messages.q" :key="key">
+                    <p>{{message}}</p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table v-if="date" class="table">
+        <tbody>
+            <tr v-for="(item, key) in date" :key="key">
+                <th>{{key}}</th>
+                <td>{{item}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->inlineScript()->captureStart(); ?> // <script>
+    var dateApp = new Vue({
+        el: '#date_app',
+        data () {
+            return {
+                messages: <?= json_encode($messages) ?>,
+                formValues: <?= json_encode($formValues) ?>,
+                date: <?= json_encode($date) ?>,
+            }
+        },
+        methods: {
+            submit: function () {
+                event.preventDefault();
+                const url = new URL(location.href);
+                for (const [key, value] of Object.entries(this.formValues)) {
+                    url.searchParams.set(key, value);
+                }
+                history.pushState(null, null, url.toString());
+                this.fetchDate(url);
+            },
+            fetchDate: function (url) {
+                url.searchParams.set('ajax', 1);
+                axios.get(url.toString()).then(function(response) {
+                    dateApp.messages = response.data.messages;
+                    dateApp.date = response.data.date;
+                });
+            },
+        },
+        mounted () {
+            window.addEventListener("popstate", function() {
+                const url = new URL(location.href);
+                const params = url.searchParams;
+                dateApp.formValues.q = params.get('q');
+                dateApp.fetchDate(params);
+            });
+        },
+    });
+// </script><?php $this->inlineScript()->captureEnd(); ?>

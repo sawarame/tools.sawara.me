@@ -11,7 +11,9 @@ declare(strict_types=1);
 namespace Application\Controller;
 
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\View\Model\JsonModel;
 use Laminas\View\Model\ViewModel;
+use Laminas\Stdlib\ArrayObject;
 use Application\Form;
 use Domain\Service;
 
@@ -40,20 +42,29 @@ class IndexController extends AbstractActionController
      */
     public function dateAction(): ViewModel
     {
-        $response = [];
-        $form = new Form\DateTimeForm($this->params()->fromQuery());
-        $response['form'] = $form;
+        $query = new ArrayObject($this->params()->fromQuery());
+        $form = new Form\DateTimeForm($query->getArrayCopy());
 
         if ($form->isValid()) {
             try {
-                $response['date'] = $this->service->generateDateStrings($form->getData()['q']);
+                $date = $this->service->generateDateStrings($form->getData()['q']);
             } catch (\Exception $e) {
                 $form->get(Form\DateTimeForm::TEXT_DATETIME_QUERY)
                     ->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
             }
         }
-
-        return new ViewModel($response);
+        if ($query->offsetGet('ajax')) {
+            return new JsonModel([
+                'messages' => $form->getMessages(),
+                'formValues' => $form->getData(),
+                'date' => isset($date) ? $date : null,
+            ]);
+        }
+        return new ViewModel([
+            'messages' => $form->getMessages(),
+            'formValues' => $form->getData(),
+            'date' => isset($date) ? $date : null,
+        ]);
     }
 
     /**
@@ -63,22 +74,30 @@ class IndexController extends AbstractActionController
      */
     public function passwordAction(): ViewModel
     {
-        $response = [];
-
-        $form = new Form\PasswordForm($this->params()->fromQuery());
-        $response['form'] = $form;
+        $query = new ArrayObject($this->params()->fromQuery());
+        $form = new Form\PasswordForm($query->getArrayCopy());
 
         if ($form->isValid()) {
             $values = $form->getData();
-            $response['password'] = $this->service->generatePasswords(
+            $password = $this->service->generatePasswords(
                 $values[Form\PasswordForm::TEXT_NUMBER_OF_PASSWORDS],
                 $values[Form\PasswordForm::TEXT_NUMBER_OF_CHARACTERS],
                 str_split($values[Form\PasswordForm::TEXT_EXCLUDE_CHARACTERS]),
                 $values[Form\PasswordForm::CHECKBOX_IS_DISALLOW_SAME_CHARACTER] ? false : true
             );
-            $form->setData($values);
         }
-
-        return new ViewModel($response);
+        if ($query->offsetGet('ajax')) {
+            return new JsonModel([
+                'messages' => $form->getMessages(),
+                'formValues' => $form->getData(),
+                'password' => isset($password) ? $password : null,
+            ]);
+        }
+        return new ViewModel([
+            'form' => $form,
+            'messages' => $form->getMessages(),
+            'formValues' => $form->getData(),
+            'password' => isset($password) ? $password : null,
+        ]);
     }
 }

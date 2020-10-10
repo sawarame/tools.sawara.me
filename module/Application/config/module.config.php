@@ -27,16 +27,6 @@ return [
                     ],
                 ],
             ],
-            'application' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/application[/:action]',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
-                    ],
-                ],
-            ],
             'date' => [
                 'type'    => Literal::class,
                 'options' => [
@@ -102,28 +92,16 @@ return [
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => [
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout'           => __DIR__ . '/../../../view/layout/layout.phtml',
             //'application/index/index' => __DIR__ . '/../view/application/index/index.sphtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'error/404'               => __DIR__ . '/../../../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../../../view/error/index.phtml',
         ],
         'template_path_stack' => [
-            __DIR__ . '/../view',
+            __DIR__ . '/../../../view',
         ],
-    ],
-    'view_helpers' => [
-        'factories' => [
-            View\Helper\Bs4FormElement::class => InvokableFactory::class,
-            View\Helper\Bs4FormElementErrors::class => InvokableFactory::class,
+        'strategies' => [
+            'ViewJsonStrategy',
         ],
-        'aliases' => [
-            'bs4FormElement' => View\Helper\Bs4FormElement::class,
-            'Bs4FormElement' => View\Helper\Bs4FormElement::class,
-            'bs4FormElementErrors' => View\Helper\Bs4FormElementErrors::class,
-            'Bs4FormElementErrors' => View\Helper\Bs4FormElementErrors::class,
-        ],
-    ],
-    'forms' => [
-
     ],
 ];

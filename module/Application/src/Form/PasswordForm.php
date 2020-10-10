@@ -109,7 +109,21 @@ class PasswordForm extends Form implements InputFilterProviderInterface
                 [
                     'name' => ApplicationFilter\DefaultValue::class,
                     'options' => [
-                        'default' => 1,
+                        'default' => true,
+                    ],
+                ],
+                [
+                    'name' => Filter\Boolean::class,
+                    'options' => [
+                        Filter\Boolean::TYPE_ALL,
+                    ],
+                ],
+            ],
+            'validators' => [
+                [
+                    'name'    => Validator\NotEmpty::class,
+                    'options' => [
+                        Validator\NotEmpty::ALL & ~ Validator\NotEmpty::BOOLEAN
                     ],
                 ],
             ],
@@ -124,8 +138,7 @@ class PasswordForm extends Form implements InputFilterProviderInterface
      */
     public function __construct(array $data)
     {
-        parent::__construct('password-form');
-        $this->setAttribute('method', 'get');
+        parent::__construct();
         foreach (self::ELEMENTS as $key => $element) {
             $this->add(array_merge(['name' => $key], $element));
         }
