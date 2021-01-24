@@ -1,7 +1,8 @@
-laminas:
+tools.sawara.me:
   build: .
   dockerfile: Dockerfile
+  container_name: tools_sawara_me_1
   ports:
-   - "8080:80"
+  - "8080:80"
   volumes:
-   - .:/var/www
+  - .:/var/www
