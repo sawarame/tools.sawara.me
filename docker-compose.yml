@@ -1,8 +1,11 @@
-tools.sawara.me:
-  build: .
-  dockerfile: Dockerfile
-  container_name: tools_sawara_me_1
-  ports:
-  - "8080:80"
-  volumes:
-  - .:/var/www
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tools_sawara_me_1
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
