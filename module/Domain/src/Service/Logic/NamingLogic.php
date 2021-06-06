@@ -4,7 +4,7 @@ namespace Domain\Service\Logic;
 
 use Laminas\Stdlib\ArrayUtils;
 
-class StringLogic
+class NamingLogic
 {
 
     /**
@@ -37,9 +37,9 @@ class StringLogic
      */
     public function convertFromCamelCaseToSnakeCase(string $source): string
     {
-        return preg_replace_callback('/([A-Z]+[^A-Z]*)/', function ($m) {
+        return trim(preg_replace_callback('/([A-Z]+[^A-Z]*)/', function ($m) {
             return '_' . strtolower($m[1]);
-        }, $source);
+        }, $source), '_');
     }
 
     /**
@@ -49,7 +49,7 @@ class StringLogic
      */
     public function convertFromSnakeCaseToCamelCase(string $source): string
     {
-        return preg_replace_callback('/(\_[a-z])/', function ($m) {
+        return preg_replace_callback('/(\_[a-z0-9])/', function ($m) {
             return strtoupper(substr($m[1], 1));
         }, $source);
     }

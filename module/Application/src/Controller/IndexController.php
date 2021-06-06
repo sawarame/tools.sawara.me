@@ -24,7 +24,7 @@ class IndexController extends AbstractActionController
 
     public function __construct(
         $translator,
-        Service\IndexService $service
+        Service\IndexControllerService $service
     ) {
         $this->translator = $translator;
         $this->service = $service;

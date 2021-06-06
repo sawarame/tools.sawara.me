@@ -14,7 +14,7 @@ class IndexControllerFactory implements FactoryInterface
     {
         $options = $options ?: null;
         $translator = $container->get(Translator::class);
-        $service = $container->get(Service\IndexService::class);
+        $service = $container->get(Service\IndexControllerService::class);
 
         $language = Optional::ofNullable(filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'))
             ->map(function ($locale) {

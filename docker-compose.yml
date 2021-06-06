@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tools_sawara_me_1
+    container_name: tools.sawara.me
     ports:
       - "8080:80"
     volumes:

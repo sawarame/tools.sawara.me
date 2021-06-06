@@ -2,18 +2,18 @@
 
 namespace Domain\Service;
 
-class IndexService
+class IndexControllerService
 {
-    private $dateTimeLogic;
-    private $passwordLogic;
+    private $dateTimeGenerator;
+    private $passwordGenerator;
 
     /** Constructor. */
     public function __construct(
-        Logic\DateTimeLogic $dateTimeLogic,
-        Logic\PasswordLogic $passwordLogic
+        Logic\DateTimeGeneratorLogic $dateTimeGenerator,
+        Logic\PasswordGeneratorLogic $passwordGenerator
     ) {
-        $this->dateTimeLogic = $dateTimeLogic;
-        $this->passwordLogic = $passwordLogic;
+        $this->dateTimeGenerator = $dateTimeGenerator;
+        $this->passwordGenerator = $passwordGenerator;
     }
 
     /**
@@ -24,8 +24,8 @@ class IndexService
      */
     public function generateDateStrings(string $source = null): array
     {
-        $dateTime = $this->dateTimeLogic->generateDateTime($source);
-        return $this->dateTimeLogic->generateDateStrings($dateTime);
+        $dateTime = $this->dateTimeGenerator->generateDateTime($source);
+        return $this->dateTimeGenerator->generateDateStrings($dateTime);
     }
 
     /**
@@ -43,9 +43,9 @@ class IndexService
         $alnum = [];
         $alpha = [];
         for ($i = 0; $i < $number; $i++) {
-            $graph[] = $this->passwordLogic->generateGraphPassword($length, $exclude, $isAllowedSameChar);
-            $alnum[] = $this->passwordLogic->generateAlnumPassword($length, $exclude, $isAllowedSameChar);
-            $alpha[] = $this->passwordLogic->generateAlphaPassword($length, $exclude, $isAllowedSameChar);
+            $graph[] = $this->passwordGenerator->generateGraphPassword($length, $exclude, $isAllowedSameChar);
+            $alnum[] = $this->passwordGenerator->generateAlnumPassword($length, $exclude, $isAllowedSameChar);
+            $alpha[] = $this->passwordGenerator->generateAlphaPassword($length, $exclude, $isAllowedSameChar);
         }
 
         return [

@@ -6,57 +6,36 @@ use Laminas\Stdlib\ArrayUtils;
 
 class PasswordLogic
 {
-    private $util;
-
     /**
-     * Constructor.
+     * Filter characters.
      *
-     * Set default timezone.
-     */
-    public function __construct(PasswordUtilLogic $util)
-    {
-        $this->util = $util;
-    }
-
-    /**
-     * Generate password by ascii printing characters excluede spece.
-     *
-     * @param integer $length
+     * @param array $chars
      * @param array $exclude
      * @return void
      */
-    public function generateGraphPassword(int $length, array $exclude = [], bool $isAllowedSameChar = false): string
+    public function filterUseCharacters(array $chars, array $exclude): array
     {
-        $useChars = $this->util->filterUseCharacters(range('!', '~'), $exclude);
-        return $this->util->generate($useChars, $length, $isAllowedSameChar);
+        $useChars = array_filter($chars, function ($var) use ($exclude) {
+            return ! ArrayUtils::inArray($var, $exclude);
+        });
+        if ($useChars) {
+            return array_values($useChars);
+        }
+        return array_values($chars);
     }
 
     /**
-     * Generate password by letters and digits.
+     * Generate password string.
      *
+     * @param array $useChars
      * @param integer $length
-     * @param array $exclude
-     * @return void
+     * @return string
      */
-    public function generateAlnumPassword(int $length, array $exclude = [], bool $isAllowedSameChar = false): string
+    public function generate(array $useChars, int $length, bool $isAllowedSameChar = false): string
     {
-        $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
-        $digits = range('0', '9');
-        $useChars = $this->util->filterUseCharacters(ArrayUtils::merge($letters, $digits), $exclude);
-        return $this->util->generate($useChars, $length, $isAllowedSameChar);
-    }
-
-    /**
-     * Generate password by letters.
-     *
-     * @param integer $length
-     * @param array $exclude
-     * @return void
-     */
-    public function generateAlphaPassword(int $length, array $exclude = [], bool $isAllowedSameChar = false): string
-    {
-        $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
-        $useChars = $this->util->filterUseCharacters($letters, $exclude);
-        return $this->util->generate($useChars, $length, $isAllowedSameChar);
+        if (! $isAllowedSameChar && count($useChars) < $length) {
+            $isAllowedSameChar = true;
+        }
+        return substr(str_shuffle(str_repeat(implode('', $useChars), ($isAllowedSameChar ? $length : 1))), 0, $length);
     }
 }

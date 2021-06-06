@@ -4,120 +4,31 @@ declare(strict_types=1);
 
 namespace DomainTest\Service\Logic;
 
-use Laminas\Stdlib\ArrayUtils;
 use PHPUnit\Framework\TestCase;
 use Domain\Service\Logic\PasswordLogic;
-use Domain\Service\Logic\PasswordUtilLogic;
 
 class PasswordLogicTest extends TestCase
 {
     private $logic = null;
-    private $util = null;
 
     public function setUp(): void
     {
-        $this->util = $this->createMock(PasswordUtilLogic::class);
-        $this->logic = new PasswordLogic($this->util);
+        $this->logic = new PasswordLogic();
     }
 
-    public function testGenerateGraphPassword(): void
+    public function testFilterUseCharacters(): void
     {
-        $letters = range('!', '~');
-        $length = 10;
-        $exclude = [];
-        $isAllowedSameChar = false;
-
-        $filterWillReturn = ['a', 'b', 'c'];
-        $generateWillReturn = 'abcdefghij';
-
-        $this->util->method('filterUseCharacters')->willReturn($filterWillReturn);
-        $this->util->expects($this->once())
-            ->method('filterUseCharacters')
-            ->with(
-                $this->equalTo($letters),
-                $this->equalTo($exclude)
-            );
-
-        $this->util->method('generate')->willReturn($generateWillReturn);
-        $this->util->expects($this->once())
-            ->method('generate')
-            ->with(
-                $this->equalTo($filterWillReturn),
-                $this->equalTo($length),
-                $this->equalTo($isAllowedSameChar)
-            );
-
-        $this->assertEquals(
-            $generateWillReturn,
-            $this->logic->generateGraphPassword($length, $exclude, $isAllowedSameChar)
-        );
+        $chars = ['a', 'b', 'c', 'd', 'f', 'g'];
+        $exclude = ['b', 'c', 'f'];
+        $expect = ['a', 'd', 'g'];
+        $this->assertEquals($expect, $this->logic->filterUseCharacters($chars, $exclude));
     }
 
-    public function testGenerateAlnumPassword(): void
+    public function testGenerate(): void
     {
-        $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
-        $digits = range('0', '9');
-        $letters = ArrayUtils::merge($letters, $digits);
-        $length = 10;
-        $exclude = [];
-        $isAllowedSameChar = false;
-
-        $filterWillReturn = ['a', 'b', 'c'];
-        $generateWillReturn = 'abcdefghij';
-
-        $this->util->method('filterUseCharacters')->willReturn($filterWillReturn);
-        $this->util->expects($this->once())
-            ->method('filterUseCharacters')
-            ->with(
-                $this->equalTo($letters),
-                $this->equalTo($exclude)
-            );
-
-        $this->util->method('generate')->willReturn($generateWillReturn);
-        $this->util->expects($this->once())
-            ->method('generate')
-            ->with(
-                $this->equalTo($filterWillReturn),
-                $this->equalTo($length),
-                $this->equalTo($isAllowedSameChar)
-            );
-
-        $this->assertEquals(
-            $generateWillReturn,
-            $this->logic->generateAlnumPassword($length, $exclude, $isAllowedSameChar)
-        );
-    }
-
-    public function testGenerateAlphaPassword(): void
-    {
-        $letters = ArrayUtils::merge(range('A', 'Z'), range('a', 'z'));
-        $length = 10;
-        $exclude = [];
-        $isAllowedSameChar = false;
-
-        $filterWillReturn = ['a', 'b', 'c'];
-        $generateWillReturn = 'abcdefghij';
-
-        $this->util->method('filterUseCharacters')->willReturn($filterWillReturn);
-        $this->util->expects($this->once())
-            ->method('filterUseCharacters')
-            ->with(
-                $this->equalTo($letters),
-                $this->equalTo($exclude)
-            );
-
-        $this->util->method('generate')->willReturn($generateWillReturn);
-        $this->util->expects($this->once())
-            ->method('generate')
-            ->with(
-                $this->equalTo($filterWillReturn),
-                $this->equalTo($length),
-                $this->equalTo($isAllowedSameChar)
-            );
-
-        $this->assertEquals(
-            $generateWillReturn,
-            $this->logic->generateAlphaPassword($length, $exclude, $isAllowedSameChar)
-        );
+        $chars = ['a', 'b', 'c', 'd', 'f', 'g'];
+        $this->assertSame(1, strlen($this->logic->generate($chars, 1)));
+        $this->assertSame(10, strlen($this->logic->generate($chars, 10)));
+        $this->assertSame(20, strlen($this->logic->generate($chars, 20)));
     }
 }
