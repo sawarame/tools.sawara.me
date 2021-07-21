@@ -8,7 +8,7 @@ class NamingLogic
 {
 
     /**
-     * Ailias convertFromCamelCaseToSnakeCase
+     * Alias convertFromCamelCaseToSnakeCase
      *
      * @param string $source
      * @return string
@@ -19,7 +19,7 @@ class NamingLogic
     }
 
     /**
-     * Ailias convertFromSnakeCaseToCamelCase
+     * Alias convertFromSnakeCaseToCamelCase
      *
      * @param string $source
      * @return string

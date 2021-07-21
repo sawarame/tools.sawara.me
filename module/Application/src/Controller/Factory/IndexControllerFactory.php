@@ -5,7 +5,7 @@ namespace Application\Controller\Factory;
 use Interop\Container\ContainerInterface;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
-use Sawarame\Optional;
+use Sawarame\Optional\Optional;
 use Domain\Service;
 
 class IndexControllerFactory implements FactoryInterface

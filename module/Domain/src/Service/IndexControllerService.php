@@ -7,7 +7,9 @@ class IndexControllerService
     private $dateTimeGenerator;
     private $passwordGenerator;
 
-    /** Constructor. */
+    /**
+     * Constructor.
+     */
     public function __construct(
         Logic\DateTimeGeneratorLogic $dateTimeGenerator,
         Logic\PasswordGeneratorLogic $passwordGenerator
@@ -17,7 +19,7 @@ class IndexControllerService
     }
 
     /**
-     * Generate date string datas from source string.
+     * Generate date string data from source string.
      *
      * @param string $source source string.
      * @return array
@@ -29,7 +31,7 @@ class IndexControllerService
     }
 
     /**
-     * Genarate some passwords
+     * Generate passwords.
      *
      * @return void
      */
