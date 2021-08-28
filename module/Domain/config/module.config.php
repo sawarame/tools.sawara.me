@@ -15,11 +15,12 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 return [
     'service_manager' => [
         'factories' => [
-            Service\IndexService::class => Service\Factory\IndexServiceFactory::class,
-            Service\Logic\DateTimeLogic::class => Service\Logic\Factory\DateTimeLogicFactory::class,
-            Service\Logic\DateTimeUtilLogic::class => InvokableFactory::class,
-            Service\Logic\PasswordLogic::class => Service\Logic\Factory\PasswordLogicFactory::class,
-            Service\Logic\PasswordUtilLogic::class => InvokableFactory::class,
+            Service\IndexControllerService::class => Service\Factory\IndexControllerServiceFactory::class,
+            Service\Logic\DateTimeDifferenceLogic::class => Service\Logic\Factory\DateTimeDifferenceLogicFactory::class,
+            Service\Logic\DateTimeGeneratorLogic::class => Service\Logic\Factory\DateTimeGeneratorLogicFactory::class,
+            Service\Logic\DateTimeLogic::class => InvokableFactory::class,
+            Service\Logic\PasswordGeneratorLogic::class => Service\Logic\Factory\PasswordGeneratorLogicFactory::class,
+            Service\Logic\PasswordLogic::class => InvokableFactory::class,
         ]
     ],
 ];

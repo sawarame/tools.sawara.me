@@ -37,6 +37,16 @@ return [
                     ],
                 ],
             ],
+            'date-diff' => [
+                'type'    => Literal::class,
+                'options' => [
+                    'route'    => '/date-diff',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'date_difference',
+                    ],
+                ],
+            ],
             'password' => [
                 'type'    => Literal::class,
                 'options' => [
@@ -65,24 +75,6 @@ return [
                 'text_domain' => 'default',
                 'locale' => 'ja',
             ],
-            [
-                'type' => 'phparray',
-                'filename' => __DIR__ . '/../languages/index/ja.php',
-                'text_domain' => 'index',
-                'locale' => 'ja',
-            ],
-            [
-                'type' => 'phparray',
-                'filename' => __DIR__ . '/../languages/date/ja.php',
-                'text_domain' => 'date',
-                'locale' => 'ja',
-            ],
-            [
-                'type' => 'phparray',
-                'filename' => __DIR__ . '/../languages/password/ja.php',
-                'text_domain' => 'password',
-                'locale' => 'ja',
-            ],
         ],
     ],
     'view_manager' => [
@@ -93,7 +85,7 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../../../view/layout/layout.phtml',
-            //'application/index/index' => __DIR__ . '/../view/application/index/index.sphtml',
+            //'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../../../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../../../view/error/index.phtml',
         ],

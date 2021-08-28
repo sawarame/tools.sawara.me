@@ -6,12 +6,12 @@ use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Domain\Service\Logic;
 
-class PasswordLogicFactory implements FactoryInterface
+class DateTimeGeneratorLogicFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $options = $options ?: null;
-        $passwordUtilLogic = $container->get(Logic\PasswordUtilLogic::class);
-        return new $requestedName($passwordUtilLogic);
+        $dateTimeLogic = $container->get(Logic\DateTimeLogic::class);
+        return new $requestedName($dateTimeLogic);
     }
 }
