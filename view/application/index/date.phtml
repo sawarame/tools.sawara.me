@@ -1,20 +1,16 @@
 <div id="date_app">
-    <h1><?= $this->translate('Date format converter', 'date') ?></h1>
+    <h1>日付時刻フォーマット変換ツール</h1>
     <hr/>
-    <p>
-        <?= $this->translate('You can get the datetime converted to various format.', 'date') ?>
-    </p>
-    <p>
-        <?= $this->translate('Enter the datetime below and click submit button.', 'date') ?>
-    </p>
+    <p>日付時刻の文字列を様々なフォーマットに変換された日時データを取得することができます。</p>
+    <p>変換する日付を入力して変換ボタンをクリックしてください。</p>
 
     <form class="form-inline" v-on:submit="submit">
         <div class="form-group">
-            <label class="ml-2 mb-2" for="q"><?= $this->translate('DateTime', 'date') ?></label>
+            <label class="ml-2 mb-2" for="q">日付</label>
             <input type="text" name="q" class="form-control ml-2 mb-2"
                 v-bind:class="{'is-invalid': messages.q}"
                 v-model="formValues.q" />
-            <button type="submit" class="btn btn-primary ml-2 mb-2"><?= $this->translate('Submit', 'date') ?></button>
+            <button type="submit" class="btn btn-primary ml-2 mb-2">変換</button>
 
             <div v-if="messages.q" class="invalid-feedback">
                 <div v-for="(message, key) in messages.q" :key="key">
@@ -67,7 +63,7 @@
                 const url = new URL(location.href);
                 const params = url.searchParams;
                 dateApp.formValues.q = params.get('q');
-                dateApp.fetchDate(params);
+                dateApp.fetchDate(url);
             });
         },
     });

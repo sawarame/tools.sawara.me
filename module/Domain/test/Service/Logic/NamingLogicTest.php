@@ -20,7 +20,7 @@ class NamingLogicTest extends TestCase
      *
      * @dataProvider providerConvertFromCamelCaseToSnakeCase
      */
-    public function testConvertFromCamelCaseToSnakeCase(string $source, string $expected) : void
+    public function testConvertFromCamelCaseToSnakeCase(string $source, string $expected): void
     {
         $actual = $this->logic->convertFromCamelCaseToSnakeCase($source);
         $this->assertEquals($expected, $actual);
@@ -40,7 +40,7 @@ class NamingLogicTest extends TestCase
      *
      * @dataProvider providerConvertFromSnakeCaseToCamelCase
      */
-    public function testConvertFromSnakeCaseToCamelCase(string $source, string $expected) : void
+    public function testConvertFromSnakeCaseToCamelCase(string $source, string $expected): void
     {
         $actual = $this->logic->convertFromSnakeCaseToCamelCase($source);
         $this->assertEquals($expected, $actual);

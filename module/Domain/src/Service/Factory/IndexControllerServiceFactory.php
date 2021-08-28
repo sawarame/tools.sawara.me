@@ -11,11 +11,13 @@ class IndexControllerServiceFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $options = $options ?: null;
-        $dateTimeLogic = $container->get(Logic\DateTimeGeneratorLogic::class);
-        $passwordLogic = $container->get(Logic\PasswordGeneratorLogic::class);
+        $dateTimeDifferenceLogic = $container->get(Logic\DateTimeDifferenceLogic::class);
+        $dateTimeGeneratorLogic = $container->get(Logic\DateTimeGeneratorLogic::class);
+        $passwordGeneratorLogic = $container->get(Logic\PasswordGeneratorLogic::class);
         return new $requestedName(
-            $dateTimeLogic,
-            $passwordLogic
+            $dateTimeDifferenceLogic,
+            $dateTimeGeneratorLogic,
+            $passwordGeneratorLogic
         );
     }
 }

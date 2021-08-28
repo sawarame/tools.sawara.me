@@ -4,6 +4,7 @@ namespace Domain\Service;
 
 class IndexControllerService
 {
+    private $dateTimeDifferenceLogic;
     private $dateTimeGenerator;
     private $passwordGenerator;
 
@@ -11,9 +12,11 @@ class IndexControllerService
      * Constructor.
      */
     public function __construct(
+        Logic\DateTimeDifferenceLogic $dateTimeDifferenceLogic,
         Logic\DateTimeGeneratorLogic $dateTimeGenerator,
         Logic\PasswordGeneratorLogic $passwordGenerator
     ) {
+        $this->dateTimeDifferenceLogic = $dateTimeDifferenceLogic;
         $this->dateTimeGenerator = $dateTimeGenerator;
         $this->passwordGenerator = $passwordGenerator;
     }
@@ -28,6 +31,11 @@ class IndexControllerService
     {
         $dateTime = $this->dateTimeGenerator->generateDateTime($source);
         return $this->dateTimeGenerator->generateDateStrings($dateTime);
+    }
+
+    public function calculateDateDifference(string $since = null, string $until = null): array
+    {
+        return $this->dateTimeDifferenceLogic->calculate($since, $until);
     }
 
     /**

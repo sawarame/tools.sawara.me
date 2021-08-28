@@ -50,7 +50,7 @@ class IndexController extends AbstractActionController
                 $date = $this->service->generateDateStrings($form->getData()['q']);
             } catch (\Exception $e) {
                 $form->get(Form\DateTimeForm::TEXT_DATETIME_QUERY)
-                    ->setMessages([$this->translator->translate('failed to date conversion.', 'date')]);
+                    ->setMessages(["日付の変換に失敗しました。"]);
             }
         }
         if ($query->offsetGet('ajax')) {
@@ -64,6 +64,35 @@ class IndexController extends AbstractActionController
             'messages' => $form->getMessages(),
             'formValues' => $form->getData(),
             'date' => isset($date) ? $date : null,
+        ]);
+    }
+
+    public function dateDifferenceAction(): ViewModel
+    {
+        $query = new ArrayObject($this->params()->fromQuery());
+        $form = new Form\DatetimeDifferenceForm($query->getArrayCopy());
+        if ($form->isValid()) {
+            try {
+                $dateDifference = $this->service->calculateDateDifference(
+                    $form->getData()['since'],
+                    $form->getData()['until']
+                );
+            } catch (\Exception $e) {
+                $form->setMessages(["日付の変換に失敗しました。"]);
+            }
+        }
+
+        if ($query->offsetGet('ajax')) {
+            return new JsonModel([
+                'messages' => $form->getMessages(),
+                'formValues' => $form->getData(),
+                'dateDifference' => isset($dateDifference) ? $dateDifference : null,
+            ]);
+        }
+        return new ViewModel([
+            'messages' => $form->getMessages(),
+            'formValues' => $form->getData(),
+            'dateDifference' => isset($dateDifference) ? $dateDifference : null,
         ]);
     }
 

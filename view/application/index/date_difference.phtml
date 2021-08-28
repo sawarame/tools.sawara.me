@@ -1,0 +1,86 @@
+<div id="date_difference_app">
+    <h1>時刻差分算出ツール</h1>
+    <hr/>
+    <p>2つの時刻から差分の、秒・分・時間・日数を算出します。</p>
+    <p>日付を入力して算出ボタンをクリックしてください。</p>
+
+    <form class="form-inline" v-on:submit="submit">
+        <div class="form-group">
+            <label class="ml-2 mb-2" for="since">時刻1</label>
+            <input type="text" name="since" class="form-control ml-2 mb-2"
+                v-bind:class="{'is-invalid': messages.since}"
+                v-model="formValues.since" />
+
+            <label class="ml-2 mb-2" for="until">時刻2</label>
+            <input type="text" name="until" class="form-control ml-2 mb-2"
+                v-bind:class="{'is-invalid': messages.until}"
+                v-model="formValues.until" />
+
+            <button type="submit" class="btn btn-primary ml-2 mb-2">計算</button>
+
+            <div v-if="messages.until" class="invalid-feedback">
+                <div v-for="(message, key) in messages.until" :key="key">
+                    <p>{{message}}</p>
+                </div>
+            </div>
+            <div v-if="messages.since" class="invalid-feedback">
+                <div v-for="(message, key) in messages.since" :key="key">
+                    <p>{{message}}</p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table v-if="dateDifference" class="table">
+        <tbody>
+            <tr v-for="(item, key) in dateDifference" :key="key">
+                <th>{{key}}</th>
+                <td>{{item}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<?php $this->inlineScript()->captureStart(); ?> // <script>
+    var dateDiffApp = new Vue({
+        el: '#date_difference_app',
+        data () {
+            return {
+                messages: <?= json_encode($messages) ?>,
+                formValues: <?= json_encode($formValues) ?>,
+                dateDifference: <?= json_encode($dateDifference) ?>,
+            }
+        },
+        methods: {
+            submit: function () {
+                event.preventDefault();
+                const url = new URL(location.href);
+                for (const [key, value] of Object.entries(this.formValues)) {
+                    url.searchParams.set(key, value ?  value : "");
+                }
+                history.pushState(null, null, url.toString());
+                console.log(this.formValues);
+                console.log(url.searchParams);
+                this.fetchDate(url);
+            },
+            fetchDate: function (url) {
+                url.searchParams.set('ajax', 1);
+                axios.get(url.toString()).then(function(response) {
+                    console.log(response.data);
+                    dateDiffApp.messages = response.data.messages;
+                    dateDiffApp.dateDifference = response.data.dateDifference;
+                });
+            },
+        },
+        mounted () {
+            window.addEventListener("popstate", function() {
+                const url = new URL(location.href);
+                const params = url.searchParams;
+                dateDiffApp.formValues.since = params.get('since');
+                dateDiffApp.formValues.until = params.get('until');
+                dateDiffApp.fetchDate(url);
+            });
+        },
+
+    });
+// </script><?php $this->inlineScript()->captureEnd(); ?>

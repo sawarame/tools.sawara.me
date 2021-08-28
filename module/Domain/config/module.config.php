@@ -16,6 +16,7 @@ return [
     'service_manager' => [
         'factories' => [
             Service\IndexControllerService::class => Service\Factory\IndexControllerServiceFactory::class,
+            Service\Logic\DateTimeDifferenceLogic::class => Service\Logic\Factory\DateTimeDifferenceLogicFactory::class,
             Service\Logic\DateTimeGeneratorLogic::class => Service\Logic\Factory\DateTimeGeneratorLogicFactory::class,
             Service\Logic\DateTimeLogic::class => InvokableFactory::class,
             Service\Logic\PasswordGeneratorLogic::class => Service\Logic\Factory\PasswordGeneratorLogicFactory::class,
